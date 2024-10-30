@@ -1,4 +1,4 @@
-FROM ubuntu:noble-20240904.1
+FROM ubuntu:noble-20241011
 ARG AUTHORS=SeleniumHQ
 LABEL authors="${AUTHORS} <selenium-developers@googlegroups.com>"
 LABEL org.opencontainers.image.source="https://github.com/${AUTHORS}/docker-selenium"
@@ -7,9 +7,9 @@ LABEL org.opencontainers.image.source="https://github.com/${AUTHORS}/docker-sele
 ARG VERSION
 ARG RELEASE=selenium-${VERSION}
 # Default value should be aligned with upstream Selenium (https://github.com/SeleniumHQ/selenium/blob/trunk/MODULE.bazel)
-ARG OPENTELEMETRY_VERSION=1.42.1
-ARG GRPC_VERSION=1.66.0
-ARG NETTY_VERSION=4.1.113.Final
+ARG OPENTELEMETRY_VERSION=1.43.0
+ARG GRPC_VERSION=1.68.0
+ARG NETTY_VERSION=4.1.114.Final
 ARG CS_VERSION=2.1.13
 
 #Arguments to define the user running Selenium
