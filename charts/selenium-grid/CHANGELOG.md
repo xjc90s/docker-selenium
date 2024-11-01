@@ -1,3 +1,20 @@
+## :heavy_check_mark: selenium-grid-0.37.0
+
+- Chart is using image tag 4.26.0-20241101
+- Chart is tested on Kubernetes versions: v1.25.16, v1.26.15, v1.27.16, v1.28.15, v1.29.10, v1.30.6, v1.31.2, 
+- Chart is tested on container runtime Docker versions: 24.0.9, 24.0.9, 24.0.9, 24.0.9, 25.0.5, 26.1.4, 27.2.0, 
+- Chart is tested on Helm versions: v3.10.3, v3.11.3, v3.12.3, v3.13.3, v3.14.3, v3.15.4, v3.16.1, 
+
+### Changed
+- [`6ce652ba`](http://github.com/seleniumhq/docker-selenium/commit/6ce652ba6ec1108d7ce05b4af5ea140d73873b59) - Update tag 4.26.0-20241101 in docs and files :: Selenium CI Bot
+- [`b41b6271`](http://github.com/seleniumhq/docker-selenium/commit/b41b62713a67488634861a52c8c6444e1b6beb71) - chart: set job scaling strategy to accurate by default :: Viet Nguyen Duc
+- [`a862efa3`](http://github.com/seleniumhq/docker-selenium/commit/a862efa3026a5aba100721ff83d858f67a1eafc7) - chart: Add templates for relay node (#2453) :: Viet Nguyen Duc
+- [`1fdc58bf`](http://github.com/seleniumhq/docker-selenium/commit/1fdc58bf072b7a276d8f33639a681f1d1c7cd3bc) - chart: Allow overwrite config videoRecorder in each node (#2445) :: Viet Nguyen Duc
+- [`3290a305`](http://github.com/seleniumhq/docker-selenium/commit/3290a305c0d122ce90d5301b96f46dc0728e33e8) - Update chart 0.36.5 changelog [skip ci] :: Selenium CI Bot
+
+### Experimental
+- Selenium Grid Scaler implementation preview. [README](https://github.com/seleniumhq/docker-selenium/tree/trunk/.keda/README.md)
+
 ## :heavy_check_mark: selenium-grid-0.36.5
 
 - Chart is using image tag 4.25.0-20241024
