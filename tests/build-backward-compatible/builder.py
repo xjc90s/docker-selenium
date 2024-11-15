@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 def load_template(yaml_file):
     try:
-        with open(yaml_file, 'r') as file:
+        with open(yaml_file) as file:
             documents = yaml.safe_load(file)
             return documents
     except yaml.YAMLError as error:

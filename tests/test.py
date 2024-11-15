@@ -174,11 +174,11 @@ def launch_container(container, **kwargs):
             if get_platform() != PLATFORM:
                 continue
             # Build the container if it doesn't exist
-            logger.info("Building %s container in platform %s..." % (container, PLATFORM))
+            logger.info(f"Building {container} container in platform {PLATFORM}...")
             set_from_image_base_for_standalone(container)
             build_path = get_build_path(container)
             client.images.build(path='../%s' % build_path,
-                                tag="%s/%s:%s" % (NAMESPACE, IMAGE_NAME_MAP[container], VERSION),
+                                tag=f"{NAMESPACE}/{IMAGE_NAME_MAP[container]}:{VERSION}",
                                 rm=True,
                                 buildargs=FROM_IMAGE_ARGS,
                                 platform=PLATFORM,)
@@ -197,7 +197,7 @@ def launch_container(container, **kwargs):
     }
     if container != 'Hub':
         environment['SE_NODE_ENABLE_MANAGED_DOWNLOADS'] = "true"
-    container_id = client.containers.run("%s/%s:%s" % (NAMESPACE, IMAGE_NAME_MAP[container], VERSION),
+    container_id = client.containers.run(f"{NAMESPACE}/{IMAGE_NAME_MAP[container]}:{VERSION}",
                                          detach=True,
                                          environment=environment,
                                          shm_size="2G",

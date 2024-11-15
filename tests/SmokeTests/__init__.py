@@ -33,7 +33,7 @@ class SmokeTests(unittest.TestCase):
         while current_attempts < max_attempts:
             current_attempts = current_attempts + 1
             try:
-                grid_url_status = '%s://%s:%s/status' % (SELENIUM_GRID_PROTOCOL, SELENIUM_GRID_HOST, port)
+                grid_url_status = f'{SELENIUM_GRID_PROTOCOL}://{SELENIUM_GRID_HOST}:{port}/status'
                 if SELENIUM_GRID_USERNAME and SELENIUM_GRID_PASSWORD:
                     response = requests.get(grid_url_status, auth=HTTPBasicAuth(SELENIUM_GRID_USERNAME, SELENIUM_GRID_PASSWORD))
                 else:
@@ -55,7 +55,7 @@ class SmokeTests(unittest.TestCase):
 
 
     def client_verify_cert(self, port):
-        grid_url_status = '%s://%s:%s/status' % (SELENIUM_GRID_PROTOCOL, SELENIUM_GRID_HOST, port)
+        grid_url_status = f'{SELENIUM_GRID_PROTOCOL}://{SELENIUM_GRID_HOST}:{port}/status'
         cert_path = os.environ.get("REQUESTS_CA_BUNDLE")
         response = requests.get(grid_url_status, verify=cert_path, auth=HTTPBasicAuth(SELENIUM_GRID_USERNAME, SELENIUM_GRID_PASSWORD))
 
