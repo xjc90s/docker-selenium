@@ -39,6 +39,7 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.11.3'
             docker-version: '24.0.9'
+            python-version: '3.8'
             test-upgrade: true
             service-mesh: true
           - k8s-version: 'v1.26.15'
@@ -46,6 +47,7 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.11.3'
             docker-version: '24.0.9'
+            python-version: '3.8'
             test-upgrade: true
             service-mesh: false
           - k8s-version: 'v1.27.16'
@@ -53,6 +55,7 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.12.3'
             docker-version: '24.0.9'
+            python-version: '3.9'
             test-upgrade: true
             service-mesh: true
           - k8s-version: 'v1.28.15'
@@ -60,6 +63,7 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.13.3'
             docker-version: '24.0.9'
+            python-version: '3.10'
             test-upgrade: true
             service-mesh: true
           - k8s-version: 'v1.29.10'
@@ -67,6 +71,7 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.14.3'
             docker-version: '25.0.5'
+            python-version: '3.11'
             test-upgrade: true
             service-mesh: false
           - k8s-version: 'v1.30.6'
@@ -74,13 +79,15 @@ jobs:
             cluster: 'minikube'
             helm-version: 'v3.15.4'
             docker-version: '26.1.4'
+            python-version: '3.12'
             test-upgrade: true
             service-mesh: false
           - k8s-version: 'v1.31.2'
             test-strategy: deployment_https
             cluster: 'minikube'
-            helm-version: 'v3.16.1'
-            docker-version: '27.2.0'
+            helm-version: 'v3.16.3'
+            docker-version: '27.3.1'
+            python-version: '3.13'
             test-upgrade: true
             service-mesh: false
     env:
@@ -111,7 +118,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@main
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
           check-latest: true
       - name: Verify chart configuration up-to-date
         run: make lint_readme_charts

@@ -9,7 +9,7 @@ ARG RELEASE=selenium-${VERSION}
 # Default value should be aligned with upstream Selenium (https://github.com/SeleniumHQ/selenium/blob/trunk/MODULE.bazel)
 ARG OPENTELEMETRY_VERSION=1.43.0
 ARG GRPC_VERSION=1.68.0
-ARG NETTY_VERSION=4.1.114.Final
+ARG NETTY_VERSION=4.1.115.Final
 ARG CS_VERSION=2.1.13
 
 #Arguments to define the user running Selenium

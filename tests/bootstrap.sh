@@ -8,7 +8,7 @@ if [ "${CI:-false}" = "false" ]; then
 fi
 
 if [[ "${BASE_VERSION}" == *-SNAPSHOT ]]; then
-  latest_version="$(curl -s https://test.pypi.org/pypi/selenium/json | jq -r '.releases | keys | .[]' | sort -V | tail -n 1)"
+  latest_version="$(curl -s https://test.pypi.org/pypi/selenium/json | jq -r '.releases | to_entries | sort_by(.value[0].upload_time) | .[-1].key')"
   python3 -m pip install --index-url https://test.pypi.org/simple/ selenium==${latest_version} --extra-index-url https://pypi.org/simple/ --upgrade --force-reinstall --break-system-packages | grep -v 'Requirement already satisfied'
 else
   python3 -m pip install selenium==${BINDING_VERSION} | grep -v 'Requirement already satisfied'
