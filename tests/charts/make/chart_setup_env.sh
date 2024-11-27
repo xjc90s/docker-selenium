@@ -87,6 +87,7 @@ elif [ "${CLUSTER}" = "minikube" ]; then
     curl -sLO https://go.dev/dl/go$GO_VERSION.linux-$(dpkg --print-architecture).tar.gz
     tar -xvf go$GO_VERSION.linux-$(dpkg --print-architecture).tar.gz -C /tmp
     rm -rf go$GO_VERSION.linux-$(dpkg --print-architecture).tar.gz*
+    sudo rm -rf /usr/local/go
     sudo mv /tmp/go /usr/local
     export GOROOT=/usr/local/go
     export GOPATH=$HOME/go
