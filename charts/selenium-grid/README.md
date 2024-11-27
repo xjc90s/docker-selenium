@@ -84,7 +84,7 @@ helm install selenium-grid --set ingress.hostname=selenium-grid.k8s.local docker
 # Verify ingress configuration via kubectl get ingress
 
 # Notes: In case you want to set hostname is selenium-grid.local. You need to add the IP and hostname to the local host file in `/etc/hosts`
-sudo -- sh -c -e "echo \"$(hostname -i) selenium-grid.local\" >> /etc/hosts"
+sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) selenium-grid.local\" >> /etc/hosts"
 ```
 
 ### Installing the Nightly chart
@@ -795,7 +795,7 @@ For example (replace `$RELEASENAME` and `$NAMESPACE` with your values):
 
 ```bash
 helm upgrade -i $RELEASENAME -n $NAMESPACE docker-selenium/selenium-grid \
-  --set global.K8S_PUBLIC_IP=$(hostname -i) \
+  --set global.K8S_PUBLIC_IP=$(hostname -I | cut -d' ' -f1) \
   --set tls.ingress.enableWithController=true \
   --set tls.create=false \
   --set tls.nameOverride=my-external-tls-secret \

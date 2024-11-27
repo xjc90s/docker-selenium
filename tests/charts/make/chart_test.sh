@@ -191,16 +191,16 @@ fi
 
 if [ "${CHART_ENABLE_INGRESS_HOSTNAME}" = "true" ]; then
   if [[ ! $(cat /etc/hosts) == *"${HOSTNAME_ADDRESS}"* ]]; then
-    sudo -- sh -c -e "echo \"$(hostname -i) ${HOSTNAME_ADDRESS}\" >> /etc/hosts"
+    sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) ${HOSTNAME_ADDRESS}\" >> /etc/hosts"
   fi
   if [[ ! $(cat /etc/hosts) == *"alertmanager.${HOSTNAME_ADDRESS}"* ]]; then
-    sudo -- sh -c -e "echo \"$(hostname -i) alertmanager.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
+    sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) alertmanager.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
   fi
   if [[ ! $(cat /etc/hosts) == *"grafana.${HOSTNAME_ADDRESS}"* ]]; then
-    sudo -- sh -c -e "echo \"$(hostname -i) grafana.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
+    sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) grafana.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
   fi
   if [[ ! $(cat /etc/hosts) == *"pts.${HOSTNAME_ADDRESS}"* ]]; then
-    sudo -- sh -c -e "echo \"$(hostname -i) pts.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
+    sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) pts.${HOSTNAME_ADDRESS}\" >> /etc/hosts"
   fi
   ping -c 2 ${HOSTNAME_ADDRESS}
   HELM_COMMAND_SET_IMAGES="${HELM_COMMAND_SET_IMAGES} \
@@ -250,7 +250,7 @@ if [ "${SECURE_INGRESS_ONLY_GENERATE}" = "true" ] && [ "${RENDER_HELM_TEMPLATE_O
   --set tls.ingress.generateTLS=true \
   --set tls.ingress.defaultCN=${SELENIUM_GRID_HOST} \
   --set tls.ingress.defaultSANList[0]=${SELENIUM_GRID_HOST} \
-  --set tls.ingress.defaultIPList[0]=$(hostname -I | awk '{print $1}') \
+  --set tls.ingress.defaultIPList[0]=$(hostname -I | cut -d' ' -f1) \
   "
 fi
 
