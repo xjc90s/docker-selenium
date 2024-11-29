@@ -6,6 +6,8 @@ services:
   selenium-event-bus:
     image: selenium/event-bus:4.27.0-20241127
     container_name: selenium-event-bus
+    environment:
+      - SE_ENABLE_TRACING=false
     ports:
       - "4442:4442"
       - "4443:4443"
@@ -22,10 +24,13 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_ENABLE_TRACING=false
 
   selenium-session-queue:
     image: selenium/session-queue:4.27.0-20241127
     container_name: selenium-session-queue
+    environment:
+      - SE_ENABLE_TRACING=false
     ports:
       - "5559:5559"
 
@@ -46,6 +51,7 @@ services:
       - SE_SESSIONS_MAP_PORT=5556
       - SE_SESSION_QUEUE_HOST=selenium-session-queue
       - SE_SESSION_QUEUE_PORT=5559
+      - SE_ENABLE_TRACING=false
 
   selenium-router:
     image: selenium/router:4.27.0-20241127
@@ -63,6 +69,7 @@ services:
       - SE_SESSIONS_MAP_PORT=5556
       - SE_SESSION_QUEUE_HOST=selenium-session-queue
       - SE_SESSION_QUEUE_PORT=5559
+      - SE_ENABLE_TRACING=false
 
   chrome:
     image: selenium/node-chrome:4.27.0-20241127
@@ -73,6 +80,7 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_ENABLE_TRACING=false
 
   edge:
     image: selenium/node-edge:4.27.0-20241127
@@ -83,6 +91,7 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_ENABLE_TRACING=false
 
   firefox:
     image: selenium/node-firefox:4.27.0-20241127
@@ -93,3 +102,4 @@ services:
       - SE_EVENT_BUS_HOST=selenium-event-bus
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_ENABLE_TRACING=false
