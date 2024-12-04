@@ -4,7 +4,7 @@
 version: "3"
 services:
   chrome:
-    image: selenium/node-chrome:4.27.0-20241127
+    image: selenium/node-chrome:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -15,7 +15,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   edge:
-    image: selenium/node-edge:4.27.0-20241127
+    image: selenium/node-edge:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -26,7 +26,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   firefox:
-    image: selenium/node-firefox:4.27.0-20241127
+    image: selenium/node-firefox:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -37,7 +37,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-hub:
-    image: selenium/hub:4.27.0-20241127
+    image: selenium/hub:4.27.0-20241204
     container_name: selenium-hub
     environment:
       - SE_ENABLE_TRACING=false

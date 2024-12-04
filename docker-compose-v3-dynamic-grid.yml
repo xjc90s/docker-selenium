@@ -4,7 +4,7 @@
 version: "3"
 services:
   node-docker:
-    image: selenium/node-docker:4.27.0-20241127
+    image: selenium/node-docker:4.27.0-20241204
     volumes:
       - ./assets:/opt/selenium/assets
       - ./NodeDocker/config.toml:/opt/selenium/config.toml
@@ -18,7 +18,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-hub:
-    image: selenium/hub:4.27.0-20241127
+    image: selenium/hub:4.27.0-20241204
     container_name: selenium-hub
     environment:
       - SE_ENABLE_TRACING=false

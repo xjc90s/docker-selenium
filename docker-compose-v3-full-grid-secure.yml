@@ -4,7 +4,7 @@
 version: "3"
 services:
   selenium-event-bus:
-    image: selenium/event-bus:4.27.0-20241127
+    image: selenium/event-bus:4.27.0-20241204
     container_name: selenium-event-bus
     ports:
       - "4442:4442"
@@ -17,7 +17,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-sessions:
-    image: selenium/sessions:4.27.0-20241127
+    image: selenium/sessions:4.27.0-20241204
     container_name: selenium-sessions
     ports:
       - "5556:5556"
@@ -33,7 +33,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-session-queue:
-    image: selenium/session-queue:4.27.0-20241127
+    image: selenium/session-queue:4.27.0-20241204
     container_name: selenium-session-queue
     volumes:
       - ./charts/selenium-grid/certs:/opt/selenium/secrets
@@ -44,7 +44,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-distributor:
-    image: selenium/distributor:4.27.0-20241127
+    image: selenium/distributor:4.27.0-20241204
     container_name: selenium-distributor
     ports:
       - "5553:5553"
@@ -66,7 +66,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-router:
-    image: selenium/router:4.27.0-20241127
+    image: selenium/router:4.27.0-20241204
     container_name: selenium-router
     ports:
       - "4444:4444"
@@ -87,7 +87,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   chrome:
-    image: selenium/node-chrome:4.27.0-20241127
+    image: selenium/node-chrome:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-event-bus
@@ -103,7 +103,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   edge:
-    image: selenium/node-edge:4.27.0-20241127
+    image: selenium/node-edge:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-event-bus
@@ -119,7 +119,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   firefox:
-    image: selenium/node-firefox:4.27.0-20241127
+    image: selenium/node-firefox:4.27.0-20241204
     shm_size: 2gb
     depends_on:
       - selenium-event-bus
