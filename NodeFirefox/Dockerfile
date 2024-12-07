@@ -24,12 +24,12 @@ RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
         FIREFOX_DOWNLOAD_URL="${FIREFOX_DOWNLOAD_URL}" ; \
     fi \
   && apt-get update -qqy \
-  && apt-get -qqy --no-install-recommends install libavcodec-extra libgtk-3-dev libdbus-glib-1-dev \
+  && apt-get -qqy --no-install-recommends install libavcodec-extra libgtk-3-dev libdbus-glib-1-dev xz-utils \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && wget --no-verbose -O /tmp/firefox.tar.bz2 $FIREFOX_DOWNLOAD_URL \
   && rm -rf /opt/firefox \
-  && tar -C /opt -xjf /tmp/firefox.tar.bz2 || tar -C /opt -xJf /tmp/firefox.tar.bz2 \
-  && rm /tmp/firefox.tar.bz2 \
+  && tar -C /opt -xjf /tmp/firefox.tar.bz2 || (mv /tmp/firefox.tar.bz2 /tmp/firefox.tar.xz && tar -C /opt -xJf /tmp/firefox.tar.xz) \
+  && rm -rf /tmp/firefox.tar.bz2 /tmp/firefox.tar.xz \
   && mv /opt/firefox /opt/firefox-$FIREFOX_VERSION \
   && mkdir -p /opt/firefox-$FIREFOX_VERSION/distribution/extensions \
   && ln -fs /opt/firefox-$FIREFOX_VERSION/firefox /usr/bin/firefox \
