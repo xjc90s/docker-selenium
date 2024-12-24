@@ -16,8 +16,11 @@ on:
         type: boolean
         default: true
   push:
+    branches:
+      - trunk
     paths-ignore:
       - '**.md'
+      - '.*'
   pull_request:
     paths-ignore:
       - '**.md'
