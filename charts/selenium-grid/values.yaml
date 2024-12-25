@@ -442,6 +442,10 @@ components:
     securityContext: {}
     # -- Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
     serviceType: ClusterIP
+    # -- Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip)
+    clusterIP: ""
+    # -- Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname)
+    externalName: ""
     # -- Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
     loadBalancerIP: ""
     # -- Custom annotations for router service
@@ -559,6 +563,12 @@ components:
     securityContext: {}
     # -- Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
     serviceType: ClusterIP
+    # -- Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip)
+    clusterIP: ""
+    # -- Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname)
+    externalName: ""
+    # -- Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
+    loadBalancerIP: ""
     # -- Custom annotations for Event Bus service
     serviceAnnotations: {}
     # -- Tolerations for Event Bus pods
@@ -780,6 +790,10 @@ hub:
   securityContext: {}
   # -- Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
   serviceType: ClusterIP
+  # -- Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip)
+  clusterIP: ""
+  # -- Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname)
+  externalName: ""
   # -- Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
   loadBalancerIP: ""
   # -- Custom annotations for Selenium Hub service
@@ -834,6 +848,10 @@ monitoring:
       enabled: true
       # -- Service type
       type: ClusterIP
+      # -- Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip)
+      clusterIP: ""
+      # -- Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname)
+      externalName: ""
       # -- Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
       loadBalancerIP: ""
       # -- Node port for service

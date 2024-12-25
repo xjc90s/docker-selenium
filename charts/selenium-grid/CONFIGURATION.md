@@ -185,6 +185,8 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | components.router.resources | object | `{}` | Resources for router container |
 | components.router.securityContext | object | `{}` | SecurityContext for router container |
 | components.router.serviceType | string | `"ClusterIP"` | Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) |
+| components.router.clusterIP | string | `""` | Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip) |
+| components.router.externalName | string | `""` | Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname) |
 | components.router.loadBalancerIP | string | `""` | Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) |
 | components.router.serviceAnnotations | object | `{}` | Custom annotations for router service |
 | components.router.tolerations | list | `[]` | Tolerations for router pods |
@@ -228,6 +230,9 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | components.eventBus.resources | object | `{}` | Resources for event-bus container |
 | components.eventBus.securityContext | object | `{}` | SecurityContext for event-bus container |
 | components.eventBus.serviceType | string | `"ClusterIP"` | Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) |
+| components.eventBus.clusterIP | string | `""` | Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip) |
+| components.eventBus.externalName | string | `""` | Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname) |
+| components.eventBus.loadBalancerIP | string | `""` | Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) |
 | components.eventBus.serviceAnnotations | object | `{}` | Custom annotations for Event Bus service |
 | components.eventBus.tolerations | list | `[]` | Tolerations for Event Bus pods |
 | components.eventBus.nodeSelector | object | `{}` | Node selector for Event Bus pods |
@@ -300,6 +305,8 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | hub.resources | object | `{}` | Resources for selenium-hub container |
 | hub.securityContext | object | `{}` | SecurityContext for selenium-hub container |
 | hub.serviceType | string | `"ClusterIP"` | Kubernetes service type (see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) |
+| hub.clusterIP | string | `""` | Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip) |
+| hub.externalName | string | `""` | Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname) |
 | hub.loadBalancerIP | string | `""` | Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) |
 | hub.serviceAnnotations | object | `{}` | Custom annotations for Selenium Hub service |
 | hub.tolerations | list | `[]` | Tolerations for selenium-hub pods |
@@ -324,6 +331,8 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | monitoring.exporter.port | int | `9199` |  |
 | monitoring.exporter.service.enabled | bool | `true` | Create a service for exporter |
 | monitoring.exporter.service.type | string | `"ClusterIP"` | Service type |
+| monitoring.exporter.service.clusterIP | string | `""` | Set specific clusterIP when serviceType is ClusterIP (see https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip) |
+| monitoring.exporter.service.externalName | string | `""` | Set specific externalName when serviceType is ExternalName (see https://kubernetes.io/docs/concepts/services-networking/service/#type-externalname) |
 | monitoring.exporter.service.loadBalancerIP | string | `""` | Set specific loadBalancerIP when serviceType is LoadBalancer (see https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) |
 | monitoring.exporter.service.nodePort | int | `30199` | Node port for service |
 | monitoring.exporter.service.annotations | object | `{}` | Annotations for exporter service |
