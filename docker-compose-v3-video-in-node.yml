@@ -7,7 +7,7 @@ services:
     deploy:
       mode: replicated
       replicas: 3
-    image: selenium/node-chrome:4.27.0-20241204
+    image: selenium/node-chrome:4.27.0-20241225
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -24,7 +24,7 @@ services:
     deploy:
       mode: replicated
       replicas: 3
-    image: selenium/node-edge:4.27.0-20241204
+    image: selenium/node-edge:4.27.0-20241225
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -41,7 +41,7 @@ services:
     deploy:
       mode: replicated
       replicas: 3
-    image: selenium/node-firefox:4.27.0-20241204
+    image: selenium/node-firefox:4.27.0-20241225
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -55,7 +55,7 @@ services:
       - SE_NODE_GRID_URL=http://selenium-hub:4444
 
   selenium-hub:
-    image: selenium/hub:4.27.0-20241204
+    image: selenium/hub:4.27.0-20241225
     container_name: selenium-hub
     environment:
       - SE_ENABLE_TRACING=false

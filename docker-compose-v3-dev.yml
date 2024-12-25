@@ -4,7 +4,7 @@
 version: "3"
 services:
   chrome:
-    image: selenium/node-chrome:4.27.0-20241204
+    image: selenium/node-chrome:4.27.0-20241225
     shm_size: 2gb
     volumes:
       - ./selenium_server_deploy.jar:/opt/selenium/selenium-server.jar
@@ -17,7 +17,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   edge:
-    image: selenium/node-edge:4.27.0-20241204
+    image: selenium/node-edge:4.27.0-20241225
     shm_size: 2gb
     volumes:
       - ./selenium_server_deploy.jar:/opt/selenium/selenium-server.jar
@@ -30,7 +30,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   firefox:
-    image: selenium/node-firefox:4.27.0-20241204
+    image: selenium/node-firefox:4.27.0-20241225
     shm_size: 2gb
     volumes:
       - ./selenium_server_deploy.jar:/opt/selenium/selenium-server.jar
@@ -43,7 +43,7 @@ services:
       - SE_ENABLE_TRACING=false
 
   selenium-hub:
-    image: selenium/hub:4.27.0-20241204
+    image: selenium/hub:4.27.0-20241225
     container_name: selenium-hub
     volumes:
       - ./selenium_server_deploy.jar:/opt/selenium/selenium-server.jar
