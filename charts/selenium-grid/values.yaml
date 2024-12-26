@@ -399,6 +399,10 @@ components:
 
     # -- Disable the Grid UI
     disableUI: false
+    # -- Specify extra environment variables for Router
+    extraEnvironmentVariables: []
+    # -- Specify extra environment variables from ConfigMap and Secret for Router
+    extraEnvFrom: []
     # -- Specify affinity for router pods, this overwrites global.seleniumGrid.affinity parameter
     affinity: {}
     # -- Specify topologySpreadConstraints for router pods, this overwrites global.seleniumGrid.topologySpreadConstraints parameter
@@ -473,6 +477,10 @@ components:
 
     # -- Configure fixed-sized thread pool for the Distributor to create new sessions as it consumes new session requests from the queue
     newSessionThreadPoolSize:
+    # -- Specify extra environment variables for Distributor
+    extraEnvironmentVariables: []
+    # -- Specify extra environment variables from ConfigMap and Secret for Distributor
+    extraEnvFrom: []
     # -- Specify affinity for distributor pods, this overwrites global.seleniumGrid.affinity parameter
     affinity: {}
     # -- Specify topologySpreadConstraints for Distributor pods, this overwrites global.seleniumGrid.topologySpreadConstraints parameter
@@ -539,6 +547,10 @@ components:
     # -- Image pull secret (see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
     imagePullSecret: ""
 
+    # -- Specify extra environment variables for Event Bus
+    extraEnvironmentVariables: []
+    # -- Specify extra environment variables from ConfigMap and Secret for Event Bus
+    extraEnvFrom: []
     # -- Specify affinity for Event Bus pods, this overwrites global.seleniumGrid.affinity parameter
     affinity: {}
     # -- Specify topologySpreadConstraints for Event Bus pods, this overwrites global.seleniumGrid.topologySpreadConstraints parameter
@@ -592,6 +604,10 @@ components:
     # -- Image pull secret (see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
     imagePullSecret: ""
 
+    # -- Specify extra environment variables for Session Map
+    extraEnvironmentVariables: []
+    # -- Specify extra environment variables from ConfigMap and Secret for Session Map
+    extraEnvFrom: []
     # -- Specify affinity for Session Map pods, this overwrites global.seleniumGrid.affinity parameter
     affinity: {}
     # -- Specify topologySpreadConstraints for Session Map pods, this overwrites global.seleniumGrid.topologySpreadConstraints parameter
@@ -646,6 +662,10 @@ components:
     # -- Image pull secret (see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
     imagePullSecret: ""
 
+    # -- Specify extra environment variables for Session Queue
+    extraEnvironmentVariables: []
+    # -- Specify extra environment variables from ConfigMap and Secret for Session Queue
+    extraEnvFrom: []
     # -- Specify affinity for Session Queue pods, this overwrites global.seleniumGrid.affinity parameter
     affinity: {}
     # -- Specify topologySpreadConstraints for Session Queue pods, this overwrites global.seleniumGrid.topologySpreadConstraints parameter
@@ -675,7 +695,7 @@ components:
   subPath: ""
 
   # -- Custom environment variables for all components
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
     # - name: SE_JAVA_OPTS
     #   value: "-Xmx512m"
     # - name:
@@ -685,7 +705,7 @@ components:
     #       key: secret-key
 
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for all components
-  extraEnvFrom:
+  extraEnvFrom: []
     # - configMapRef:
     #   name: proxy-settings
     # - secretRef:
@@ -758,7 +778,7 @@ hub:
   # -- Custom sub path for the hub deployment
   subPath: ""
   # -- Custom environment variables for selenium-hub
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
     # - name: SE_JAVA_OPTS
     #   value: "-Xmx512m"
     # - name: SECRET_VARIABLE
@@ -767,7 +787,7 @@ hub:
     #       name: secret-name
     #       key: secret-key
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for selenium-hub
-  extraEnvFrom:
+  extraEnvFrom: []
     # - configMapRef:
     #   name: proxy-settings
     # - secretRef:
@@ -1039,7 +1059,7 @@ chromeNode:
     #   hostnames:
     #     - "example.org"
   # -- Custom environment variables for chrome nodes
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
     # - name: SE_JAVA_OPTS
     #   value: "-Xmx512m"
     # - name:
@@ -1048,7 +1068,7 @@ chromeNode:
     #       name: secret-name
     #       key: secret-key
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for chrome nodes
-  extraEnvFrom:
+  extraEnvFrom: []
     # - configMapRef:
     #   name: proxy-settings
     # - secretRef:
@@ -1224,7 +1244,7 @@ firefoxNode:
     #   hostnames:
     #     - "example.org"
   # -- Custom environment variables for firefox nodes
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
     # - name: SE_JAVA_OPTS
     #   value: "-Xmx512m"
     # - name:
@@ -1233,7 +1253,7 @@ firefoxNode:
     #       name: secret-name
     #       key: secret-key
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for firefox nodes
-  extraEnvFrom:
+  extraEnvFrom: []
     # - configMapRef:
     #   name: proxy-settings
     # - secretRef:
@@ -1408,7 +1428,7 @@ edgeNode:
     #   hostnames:
     #     - "example.org"
   # -- Custom environment variables for edge nodes
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
     # - name: SE_JAVA_OPTS
     #   value: "-Xmx512m"
     # - name:
@@ -1417,7 +1437,7 @@ edgeNode:
     #       name: secret-name
     #       key: secret-key
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for edge nodes
-  extraEnvFrom:
+  extraEnvFrom: []
     # - configMapRef:
     #   name: proxy-settings
     # - secretRef:
@@ -1592,7 +1612,7 @@ relayNode:
   #   hostnames:
   #     - "example.org"
   # -- Custom environment variables for relay nodes
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
   # - name: SE_JAVA_OPTS
   #   value: "-Xmx512m"
   # - name:
@@ -1601,7 +1621,7 @@ relayNode:
   #       name: secret-name
   #       key: secret-key
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for relay nodes
-  extraEnvFrom:
+  extraEnvFrom: []
   # - configMapRef:
   #   name: proxy-settings
   # - secretRef:
@@ -1771,9 +1791,9 @@ videoRecorder:
   # -- SecurityContext for recorder container
   securityContext:
   # -- Extra environment variables for video recorder
-  extraEnvironmentVariables:
+  extraEnvironmentVariables: []
   # -- Custom environment variables by sourcing entire configMap, Secret, etc. for video recorder.
-  extraEnvFrom:
+  extraEnvFrom: []
   # - configMapRef:
   #   name: proxy-settings
   # - secretRef:
@@ -1824,7 +1844,7 @@ videoRecorder:
       runAsUser: 0
     command: []
     args: []
-    extraEnvironmentVariables:
+    extraEnvironmentVariables: []
     # - name: AWS_ACCESS_KEY_ID
     #   value: aws_access_key_id
     # - name: AWS_SECRET_ACCESS_KEY
