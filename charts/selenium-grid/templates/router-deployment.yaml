@@ -61,7 +61,7 @@ spec:
               value: '{{ template "seleniumGrid.sessionQueue.fullname" . }}.{{ .Release.Namespace }}'
             - name: SE_SESSION_QUEUE_PORT
               value: {{ .Values.components.sessionQueue.port | quote }}
-            {{- with .Values.components.subPath }}
+            {{- with .Values.components.router.subPath }}
             - name: SE_SUB_PATH
               value: {{ include "utils.trimTrailingSlash" . | quote }}
             {{- end }}

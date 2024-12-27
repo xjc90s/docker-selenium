@@ -93,8 +93,8 @@ selenium-grid:
   isolateComponents: true
 
   components:
-    subPath: *gridAppRoot
     router:
+      subPath: *gridAppRoot
       disableUI: true
       serviceType: NodePort
       extraEnvironmentVariables:

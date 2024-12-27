@@ -92,8 +92,8 @@ ingress:
 isolateComponents: true
 
 components:
-  subPath: *gridAppRoot
   router:
+    subPath: *gridAppRoot
     disableUI: true
     annotations:
       "restartOnUpdate": "true"

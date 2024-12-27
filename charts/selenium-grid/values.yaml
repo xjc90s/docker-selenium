@@ -397,6 +397,8 @@ components:
     # -- Image pull secret (see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)
     imagePullSecret: ""
 
+    # -- Custom sub path for Router
+    subPath: ""
     # -- Disable the Grid UI
     disableUI: false
     # -- Specify extra environment variables for Router
@@ -690,9 +692,6 @@ components:
     nodeSelector: {}
     # -- Priority class name for Session Queue pods
     priorityClassName: ""
-
-  # -- Custom sub path for all components
-  subPath: ""
 
   # -- Custom environment variables for all components
   extraEnvironmentVariables: []

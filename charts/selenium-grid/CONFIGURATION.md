@@ -173,6 +173,7 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | components.router.imageTag | string | `nil` | Router image tag (this overwrites global.seleniumGrid.imageTag parameter) |
 | components.router.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (see https://kubernetes.io/docs/concepts/containers/images/#updating-images) |
 | components.router.imagePullSecret | string | `""` | Image pull secret (see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) |
+| components.router.subPath | string | `""` | Custom sub path for Router |
 | components.router.disableUI | bool | `false` | Disable the Grid UI |
 | components.router.extraEnvironmentVariables | list | `[]` | Specify extra environment variables for Router |
 | components.router.extraEnvFrom | list | `[]` | Specify extra environment variables from ConfigMap and Secret for Router |
@@ -284,7 +285,6 @@ A Helm chart for creating a Selenium Grid Server in Kubernetes
 | components.sessionQueue.tolerations | list | `[]` | Tolerations for Session Queue pods |
 | components.sessionQueue.nodeSelector | object | `{}` | Node selector for Session Queue pods |
 | components.sessionQueue.priorityClassName | string | `""` | Priority class name for Session Queue pods |
-| components.subPath | string | `""` | Custom sub path for all components |
 | components.extraEnvironmentVariables | list | `[]` | Custom environment variables for all components |
 | components.extraEnvFrom | list | `[]` | Custom environment variables by sourcing entire configMap, Secret, etc. for all components |
 | hub.imageRegistry | string | `nil` | Registry to pull the image (this overwrites global.seleniumGrid.imageRegistry parameter) |
