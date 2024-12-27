@@ -251,7 +251,7 @@ video: base
 	cd ./Video && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --build-arg FFMPEG_BASED_NAME=$(FFMPEG_BASED_NAME) --build-arg FFMPEG_BASED_TAG=$(FFMPEG_BASED_TAG) $(FROM_IMAGE_ARGS) -t $(NAME)/video:$(FFMPEG_TAG_VERSION)-$(BUILD_DATE) .
 
 ffmpeg:
-	cd ./.ffmpeg && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --build-arg VERSION_FFMPEG=$(FFMPEG_VERSION) $(FROM_IMAGE_ARGS) -t $(NAME)/ffmpeg:$(FFMPEG_VERSION)-$(BUILD_DATE) .
+	cd ./.ffmpeg && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --build-arg FFMPEG_VERSION=$(FFMPEG_VERSION) $(FROM_IMAGE_ARGS) -t $(NAME)/ffmpeg:$(FFMPEG_VERSION)-$(BUILD_DATE) .
 
 fetch_grid_scaler_resources:
 	mkdir -p ./.keda/scalers \
