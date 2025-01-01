@@ -1,3 +1,23 @@
+## :heavy_check_mark: selenium-grid-0.38.3
+
+- Chart is using image tag 4.27.0-20250101
+- Chart is tested on Kubernetes versions: v1.25.16, v1.26.15, v1.27.16, v1.28.15, v1.29.10, v1.30.6, v1.31.2, 
+- Chart is tested on container runtime Docker versions: 24.0.9, 24.0.9, 24.0.9, 24.0.9, 25.0.5, 26.1.4, 27.3.1, 
+- Chart is tested on Helm versions: v3.11.3, v3.11.3, v3.12.3, v3.13.3, v3.14.3, v3.15.4, v3.16.3, 
+- Chart is tested autoscaling capabilities with KEDA image tag: 2.16.1
+
+### Changed
+- [`f353914d`](http://github.com/seleniumhq/docker-selenium/commit/f353914db44470765311f2a42f302bf935e7428d) - [ci] Update tag 4.27.0-20250101 in docs and files :: Selenium CI Bot
+- [`39027998`](http://github.com/seleniumhq/docker-selenium/commit/39027998f922a15e5bb97eb6773eb484e1518b58) - Docker: Collect JVM heap dump in case server run into error (#2546) :: Viet Nguyen Duc
+- [`7d6ddb77`](http://github.com/seleniumhq/docker-selenium/commit/7d6ddb778549f2c366622d9e944d9355446b1b73) - K8s: Allow extra data set to EventBus and Node configmap (#2545) :: Viet Nguyen Duc
+- [`bd7876e0`](http://github.com/seleniumhq/docker-selenium/commit/bd7876e0f3a66a184af9318ce9c10969307e184b) - Update Helm release kube-prometheus-stack to v67.5.0 (#2533) :: renovate[bot]
+- [`bff83697`](http://github.com/seleniumhq/docker-selenium/commit/bff83697c1479889cae704c064d51ecd07541e0a) - Update Helm release postgresql to v16.3.4 (#2532) :: renovate[bot]
+- [`c10b3d27`](http://github.com/seleniumhq/docker-selenium/commit/c10b3d2782a7a3ffa243000db72e8f91798d805d) - Update Helm release ingress-nginx to v4.12.0 (#2544) :: renovate[bot]
+- [`6f25d806`](http://github.com/seleniumhq/docker-selenium/commit/6f25d806d43554bd6d98619ec0d7e21dd1eadfba) - K8s: Add default values for multiple nodes platform and version (#2543) :: Viet Nguyen Duc
+- [`d01680cb`](http://github.com/seleniumhq/docker-selenium/commit/d01680cba3feb3d050d9ff667aaa9816fca8e33a) - K8s: Update config `components.subPath` to `components.router.subPath` :: Viet Nguyen Duc
+- [`325307ac`](http://github.com/seleniumhq/docker-selenium/commit/325307ac5fa14569f4110b30dcfdda68b9989368) - K8s: Configs extraEnvironmentVariables, extraEnvFrom in each distributed component :: Viet Nguyen Duc
+- [`2d80c880`](http://github.com/seleniumhq/docker-selenium/commit/2d80c8805d5141d3b382f32271d3bf032b0c1120) - [ci] Update chart 0.38.2 changelog :: Selenium CI Bot
+
 ## :heavy_check_mark: selenium-grid-0.38.2
 
 - Chart is using image tag 4.27.0-20241225
