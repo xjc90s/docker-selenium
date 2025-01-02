@@ -33,7 +33,7 @@ RUN apt-get update -qqy && \
       FIREFOX_DOWNLOAD_URL="https://download-installer.cdn.mozilla.net/pub/firefox/releases/$FIREFOX_VERSION/linux-x86_64/en-US/firefox-$FIREFOX_VERSION.deb" ; \
     fi \
   else \
-    if [ $FIREFOX_VERSION = "latest" ]; then \
+    if [ ${FIREFOX_VERSION} = "latest" ] && [ ${FIREFOX_DOWNLOAD_URL} = "" ]; then \
       FIREFOX_VERSION="nightly-latest" ; \
       /opt/bin/install-firefox-apt.sh \
       && FIREFOX_VERSION=$(echo "-$FIREFOX_VERSION" | sed 's/-latest//') \

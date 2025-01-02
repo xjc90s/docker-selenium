@@ -28,6 +28,11 @@ on:
         required: false
         type: boolean
         default: false
+      build-date:
+        description: 'Build date'
+        required: false
+        type: string
+        default: ''
   push:
     branches:
       - trunk
@@ -75,13 +80,18 @@ jobs:
           gh_cli_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Sets build date
         run: |
-          echo "BUILD_DATE=$(date '+%Y%m%d')" >> $GITHUB_ENV
+          if [ -z "${BUILD_DATE}" ]; then
+            echo "BUILD_DATE=$(date '+%Y%m%d')" >> $GITHUB_ENV
+          else
+            echo "BUILD_DATE=${BUILD_DATE}" >> $GITHUB_ENV
+          fi
           echo "NAME=${NAMESPACE}" >> $GITHUB_ENV
           make set_build_multiarch
           cat .env | xargs -I {} echo {} >> $GITHUB_ENV
         env:
           NAMESPACE: ${{ vars.DOCKER_NAMESPACE || 'selenium' }}
           AUTHORS: ${{ vars.AUTHORS || 'SeleniumHQ' }}
+          BUILD_DATE: ${{ github.event.inputs.build-date || '' }}
       - name: Sets prerelease to false by default
         run: echo "PRERELEASE=false" >> $GITHUB_ENV
       - name: Get Grid version
