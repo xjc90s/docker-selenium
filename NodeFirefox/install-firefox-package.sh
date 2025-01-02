@@ -30,7 +30,7 @@ if [[ "${FIREFOX_DOWNLOAD_URL}" == *".deb"* ]]; then
   sudo apt-get install -y --allow-downgrades -f /tmp/firefox.deb
   rm -f /tmp/firefox.deb
   if [ $FIREFOX_VERSION = "-beta" ] || [ $FIREFOX_VERSION = "-nightly" ] || [ $FIREFOX_VERSION = "-devedition" ] || [ $FIREFOX_VERSION = "-esr" ]; then
-    sudo ln -fs $(which firefox${FIREFOX_VERSION}) /usr/bin/firefox ; \
+    sudo ln -fs $(which firefox${FIREFOX_VERSION}) /usr/bin/firefox
   fi
 elif [[ "${FIREFOX_DOWNLOAD_URL}" == *".tar.bz2"* ]]; then
   echo "Downloading Firefox from ${FIREFOX_DOWNLOAD_URL}"
