@@ -53,7 +53,6 @@ RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
     acl \
     bzip2 \
     xz-utils \
-    ca-certificates \
     tzdata \
     sudo \
     unzip \
@@ -64,6 +63,7 @@ RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
     gnupg2 \
     libnss3-tools \
     openjdk-${JRE_VERSION}-jdk-headless \
+    ca-certificates \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN --mount=type=secret,id=SEL_PASSWD \

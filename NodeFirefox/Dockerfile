@@ -43,6 +43,8 @@ RUN apt-get update -qqy && \
         ln -fs $(which firefox$FIREFOX_VERSION) /usr/bin/firefox ; \
       fi ; \
     else \
+      FIREFOX_VERSION="nightly-latest" \
+      && FIREFOX_VERSION=$(echo "-$FIREFOX_VERSION" | sed 's/-latest//') \
       FIREFOX_DOWNLOAD_URL="${FIREFOX_DOWNLOAD_URL}" ; \
     fi ; \
   fi && \
