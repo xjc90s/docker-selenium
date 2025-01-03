@@ -35,6 +35,7 @@ jobs:
   helm-chart-test:
     if: github.event.inputs.skip-test != 'true' && contains(toJson(github.event.commits), '[skip test]') == false
     uses: ./.github/workflows/helm-chart-test.yml
+    secrets: inherit
     with:
       release: ${{ github.event.inputs.release == 'true' }}
 
