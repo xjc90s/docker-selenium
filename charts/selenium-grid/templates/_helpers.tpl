@@ -349,7 +349,7 @@ template:
         {{- end }}
         {{- if and (eq (include "seleniumGrid.useKEDA" $) "true") }}
           - name: SE_NODE_PLATFORM_NAME
-            value: {{ default "Linux" .node.hpa.platformName | quote }}
+            value: {{ default "" .node.hpa.platformName | quote }}
         {{- end }}
           - name: SE_NODE_CONTAINER_NAME
             valueFrom:

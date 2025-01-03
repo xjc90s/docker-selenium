@@ -3,3 +3,5 @@ requests
 chardet
 csv2md
 selenium
+yamale
+yamllint
