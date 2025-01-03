@@ -1,6 +1,6 @@
 # selenium-grid
 
-![Version: 0.38.3](https://img.shields.io/badge/Version-0.38.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.27.0-20250101](https://img.shields.io/badge/AppVersion-4.27.0--20250101-informational?style=flat-square)
+![Version: 0.38.4](https://img.shields.io/badge/Version-0.38.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.27.0-20250101](https://img.shields.io/badge/AppVersion-4.27.0--20250101-informational?style=flat-square)
 
 A Helm chart for creating a Selenium Grid Server in Kubernetes
 
