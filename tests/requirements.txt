@@ -3,5 +3,6 @@ requests
 chardet
 csv2md
 selenium
+pyyaml
 yamale
 yamllint

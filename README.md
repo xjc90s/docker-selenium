@@ -34,6 +34,7 @@ Talk to us at https://www.selenium.dev/support/
 * [Dev and Beta Channel Browser Images](#dev-and-beta-channel-browser-images)
   * [Dev and Beta Standalone Mode](#dev-and-beta-standalone-mode)
   * [Dev and Beta on the Grid](#dev-and-beta-on-the-grid)
+* [Environment Variables](#environment-variables)
 * [Execution modes](#execution-modes)
   * [Standalone](#standalone)
   * [Hub and Nodes](#hub-and-nodes)
@@ -347,6 +348,24 @@ services:
 ```
 
 For more information on the Dev and Beta channel container images, see the blog post on [Dev and Beta Channel Browsers via Docker Selenium](https://www.selenium.dev/blog/2022/dev-and-beta-channel-browsers-via-docker-selenium/).
+
+## Environment Variables
+
+**Checkout full list of environment variables [here](ENV_VARIABLES.md).**
+
+How to update or contribute to list of environment variables? Follow below steps:
+
+1. Refresh the list to pick up new environment variables or default value
+
+    ```bash
+    make update_list_env_vars
+    ```
+
+    The script can be updated in [scripts/generate_list_env_vars/extract_env.py](scripts/generate_list_env_vars/extract_env.py).
+
+2. Update the description for each environment variable in the file [scripts/generate_list_env_vars/description.yaml](scripts/generate_list_env_vars/description.yaml).
+
+3. Run the command in step (1) one more time to update the list of environment variables with new descriptions.
 
 ## Execution modes
 
