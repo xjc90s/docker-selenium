@@ -1,9 +1,7 @@
 FROM ubuntu:noble AS builder
 ARG FFMPEG_VERSION="7.1"
-ARG RCLONE_VER="v1.68.2"
+ARG RCLONE_VER="v1.69.0"
 ARG GO_VERSION="latest"
-ARG GO_CRYPTO_VERSION="v0.31.0"
-ARG GO_NET_VERSION="v0.33.0"
 
 USER root
 
@@ -33,9 +31,9 @@ RUN cd /usr/local/src \
     && cd rclone \
     && git checkout ${RCLONE_VER} \
     # Patch deps version in go.mod to fix CVEs
-    && sed -i "s|golang.org/x/crypto v.*|golang.org/x/crypto ${GO_CRYPTO_VERSION}|g" go.mod \
-    && sed -i "s|golang.org/x/net v.*|golang.org/x/net ${GO_NET_VERSION}|g" go.mod \
-    && go mod tidy \
+#    && sed -i "s|golang.org/x/crypto v.*|golang.org/x/crypto ${GO_CRYPTO_VERSION}|g" go.mod \
+#    && sed -i "s|golang.org/x/net v.*|golang.org/x/net ${GO_NET_VERSION}|g" go.mod \
+#    && go mod tidy \
     # Build rclone
     && make \
     && mv ~/go/bin/rclone /usr/local/bin/ \
