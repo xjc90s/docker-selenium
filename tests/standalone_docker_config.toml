@@ -10,7 +10,7 @@ configs = [
 
 url = "http://127.0.0.1:2375"
 
-video-image = "${NAMESPACE}/video:${VIDEO_TAG}"
+video-image = "false"
 
 [node]
 detect-drivers = false
