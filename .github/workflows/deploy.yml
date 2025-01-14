@@ -186,6 +186,7 @@ jobs:
           git config --local user.email "selenium-ci@users.noreply.github.com"
           git config --local user.name "Selenium CI Bot"
           git commit -m "[ci] Update tag ${RELEASE_TAG} in docs and files" -m "[skip test]" -a
+          git pull --rebase
         env:
           RELEASE_TAG: "${{ env.GRID_VERSION }}-${{ env.BUILD_DATE }}"
       - name: Push changes

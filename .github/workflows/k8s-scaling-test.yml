@@ -219,6 +219,7 @@ jobs:
           git config --local user.name "Selenium CI Bot"
           git add .keda/.
           git commit -m "[ci] Upload autoscaling in K8s test results" -m "[skip ci]" -a
+          git pull --rebase
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
