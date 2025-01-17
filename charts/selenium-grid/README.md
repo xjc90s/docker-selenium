@@ -91,6 +91,20 @@ helm install selenium-grid --set ingress.hostname=selenium-grid.k8s.local docker
 sudo -- sh -c -e "echo \"$(hostname -I | cut -d' ' -f1) selenium-grid.local\" >> /etc/hosts"
 ```
 
+When deploying the chart with your custom values, it is recommended to create a YAML file with all configs need to change and corresponding values, then pass it to Helm CLI via `--values` flag. This will help you to manage and reuse the config values easily for multiple deployment env as well as other GitOps toos like ArgoCD, Flux, etc. It also helps us quickly to identify the problem when you need support for an issue. For example:
+
+```yaml
+# your_deployment_values.yaml
+isolateComponents: true
+basicAuth:
+  enabled: true
+ingress:
+  enabled: false
+components:
+  router:
+    serviceType: "NodePort"
+```
+
 ### Installing the Nightly chart
 
 Nightly chart is built from the latest main branch of this repository with using Nightly images. It is not recommended to use this chart in production. It is only for testing purpose. The procedure to install the Nightly chart is the same as the above, only different on the version, it is `1.0.0-nightly`
