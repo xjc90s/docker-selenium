@@ -17,7 +17,7 @@ COPY --from=source /usr/local/bin/rclone /usr/local/bin/rclone
 
 RUN apt-get -qqy update \
     && apt-get -qqy --no-install-recommends install \
-    libx11-dev libxcb-shm0 libxcb1-dev libpulse-dev libasound2-dev \
+    libx11-6 libx11-xcb1 libxcb1 libpulse0 libasound2t64 \
     x11-xserver-utils x11-utils \
     python3-pip \
     && apt-get -qqy update \
