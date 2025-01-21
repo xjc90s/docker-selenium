@@ -1,3 +1,21 @@
+## :heavy_check_mark: selenium-grid-0.39.0
+
+- Chart is using image tag 4.28.0-20250120
+- Chart is tested on Kubernetes versions: v1.26.15,v1.27.16,v1.28.15,v1.29.13,v1.30.9,v1.31.5,v1.32.1
+- Chart is tested on container runtime Docker versions: 26.1.4,27.4.1
+- Chart is tested on Helm versions: v3.11.3,v3.12.3,v3.13.3,v3.14.3,v3.15.4,v3.16.4,v3.17.0
+- Chart is tested autoscaling capabilities with KEDA image tag: 2.16.1-selenium-grid-20250120
+- Selenium Grid Scaler implementation preview. [README](https://github.com/seleniumhq/docker-selenium/tree/trunk/.keda/README.md)
+
+### Changed
+- [`6cf49815`](http://github.com/seleniumhq/docker-selenium/commit/6cf498159d8e30195a2be67faa8f20b16e25a644) - [ci] Update tag 4.28.0-20250120 in docs and files :: Selenium CI Bot
+- [`dd1731da`](http://github.com/seleniumhq/docker-selenium/commit/dd1731dab3f591e69717ecbc9e7b8f3b62740514) - Enable passing securityContext to initContainers in the Helm chart (#2607) :: Oskar Budziosz
+- [`ee5e6581`](http://github.com/seleniumhq/docker-selenium/commit/ee5e6581fd93f4f72dfecb32c0e7c5ffb0c8d351) - Update Helm release kube-prometheus-stack to v68.3.0 (#2604) :: renovate[bot]
+- [`e9c4c3df`](http://github.com/seleniumhq/docker-selenium/commit/e9c4c3df899642fba55bcb5c3c75a0ba20fff078) - Update Helm release kube-prometheus-stack to v68.2.2 (#2601) :: renovate[bot]
+- [`d1ebdcfc`](http://github.com/seleniumhq/docker-selenium/commit/d1ebdcfc973c52b6ec7a0e3b4d570d98466f109c) - Update Helm release kube-prometheus-stack to v68.2.1 (#2597) :: renovate[bot]
+- [`e10551de`](http://github.com/seleniumhq/docker-selenium/commit/e10551dea07751a031aff7c4fb775eca496a901e) - K8s: Allow adjutment of component replica count (#2600) :: joshfng
+- [`2b2c9e02`](http://github.com/seleniumhq/docker-selenium/commit/2b2c9e0221511d8cdb4c937518abdbd78c6688fe) - [ci] Update chart 0.38.5 changelog :: Selenium CI Bot
+
 ## :heavy_check_mark: selenium-grid-0.38.5
 
 - Chart is using image tag 4.27.0-20250101
