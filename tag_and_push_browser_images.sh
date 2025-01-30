@@ -5,6 +5,8 @@ BUILD_DATE=$2
 NAMESPACE=$3
 PUSH_IMAGE="${4:-false}"
 BROWSER=$5
+RELEASE_OLD_VERSION="${6:-false}"
+PLATFORM="${7:-linux/amd64}"
 
 TAG_VERSION=${VERSION}-${BUILD_DATE}
 NAMESPACE=${NAME:-selenium}
@@ -20,12 +22,13 @@ echo "Tagging images for browser ${BROWSER}, version ${VERSION}, build date ${BU
 case "${BROWSER}" in
 
 chrome)
-  CHROME_VERSION=$(docker run --rm ${NAMESPACE}/node-chrome:${TAG_VERSION} google-chrome --version | awk '{print $3}')
+  echo "Selenium Grid version -> ${TAG_VERSION}"
+  CHROME_VERSION=$(docker run --platform ${PLATFORM} --rm ${NAMESPACE}/node-chrome:${TAG_VERSION} google-chrome --version | awk '{print $3}')
   echo "Chrome version -> "${CHROME_VERSION}
   CHROME_SHORT_VERSION="$(short_version ${CHROME_VERSION})"
   echo "Short Chrome version -> "${CHROME_SHORT_VERSION}
 
-  CHROMEDRIVER_VERSION=$(docker run --rm ${NAMESPACE}/node-chrome:${TAG_VERSION} chromedriver --version | awk '{print $2}')
+  CHROMEDRIVER_VERSION=$(docker run --platform ${PLATFORM} --rm ${NAMESPACE}/node-chrome:${TAG_VERSION} chromedriver --version | awk '{print $2}')
   echo "ChromeDriver version -> "${CHROMEDRIVER_VERSION}
   CHROMEDRIVER_SHORT_VERSION="$(short_version ${CHROMEDRIVER_VERSION})"
   echo "Short ChromeDriver version -> "${CHROMEDRIVER_SHORT_VERSION}
@@ -34,23 +37,27 @@ chrome)
     ${CHROME_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${CHROME_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${CHROME_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}
     # Browser version and build date
     ${CHROME_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${CHROME_VERSION}
     ## Short versions
     ${CHROME_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${CHROME_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${CHROME_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}
     # Browser version and build date
     ${CHROME_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${CHROME_SHORT_VERSION}
   )
+  if [ "${RELEASE_OLD_VERSION}" = "false" ]; then
+    CHROME_TAGS+=(
+      # Browser version and browser driver version
+      ${CHROME_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}
+      # Browser version
+      ${CHROME_VERSION}
+      # Browser version and browser driver version
+      ${CHROME_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}
+      # Browser version
+      ${CHROME_SHORT_VERSION}
+    )
+  fi
 
   for chrome_tag in "${CHROME_TAGS[@]}"; do
     docker tag ${NAMESPACE}/node-chrome:${TAG_VERSION} ${NAMESPACE}/node-chrome:${chrome_tag}
@@ -65,6 +72,7 @@ chrome)
 
   ;;
 chromium)
+  echo "Selenium Grid version -> ${TAG_VERSION}"
   CHROMIUM_VERSION=$(docker run --rm ${NAMESPACE}/node-chromium:${TAG_VERSION} chromium --version | awk '{print $2}')
   echo "Chromium version -> "${CHROMIUM_VERSION}
   CHROMIUM_SHORT_VERSION="$(short_version ${CHROMIUM_VERSION})"
@@ -79,23 +87,27 @@ chromium)
     ${CHROMIUM_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${CHROMIUM_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${CHROMIUM_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}
     # Browser version and build date
     ${CHROMIUM_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${CHROMIUM_VERSION}
     ## Short versions
     ${CHROMIUM_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${CHROMIUM_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${CHROMIUM_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}
     # Browser version and build date
     ${CHROMIUM_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${CHROMIUM_SHORT_VERSION}
   )
+  if [ "${RELEASE_OLD_VERSION}" = "false" ]; then
+    CHROMIUM_TAGS+=(
+      # Browser version and browser driver version
+      ${CHROMIUM_VERSION}-chromedriver-${CHROMEDRIVER_VERSION}
+      # Browser version
+      ${CHROMIUM_VERSION}
+      # Browser version and browser driver version
+      ${CHROMIUM_SHORT_VERSION}-chromedriver-${CHROMEDRIVER_SHORT_VERSION}
+      # Browser version
+      ${CHROMIUM_SHORT_VERSION}
+    )
+  fi
 
   for chromium_tag in "${CHROMIUM_TAGS[@]}"; do
     docker tag ${NAMESPACE}/node-chromium:${TAG_VERSION} ${NAMESPACE}/node-chromium:${chromium_tag}
@@ -110,6 +122,7 @@ chromium)
 
   ;;
 edge)
+  echo "Selenium Grid version -> ${TAG_VERSION}"
   EDGE_VERSION=$(docker run --rm ${NAMESPACE}/node-edge:${TAG_VERSION} microsoft-edge --version | awk '{print $3}')
   echo "Edge version -> "${EDGE_VERSION}
   EDGE_SHORT_VERSION="$(short_version ${EDGE_VERSION})"
@@ -124,23 +137,27 @@ edge)
     ${EDGE_VERSION}-edgedriver-${EDGEDRIVER_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${EDGE_VERSION}-edgedriver-${EDGEDRIVER_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${EDGE_VERSION}-edgedriver-${EDGEDRIVER_VERSION}
     # Browser version and build date
     ${EDGE_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${EDGE_VERSION}
     ## Short versions
     ${EDGE_SHORT_VERSION}-edgedriver-${EDGEDRIVER_SHORT_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${EDGE_SHORT_VERSION}-edgedriver-${EDGEDRIVER_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${EDGE_SHORT_VERSION}-edgedriver-${EDGEDRIVER_SHORT_VERSION}
     # Browser version and build date
     ${EDGE_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${EDGE_SHORT_VERSION}
   )
+  if [ "${RELEASE_OLD_VERSION}" = "false" ]; then
+    EDGE_TAGS+=(
+      # Browser version and browser driver version
+      ${EDGE_VERSION}-edgedriver-${EDGEDRIVER_VERSION}
+      # Browser version
+      ${EDGE_VERSION}
+      # Browser version and browser driver version
+      ${EDGE_SHORT_VERSION}-edgedriver-${EDGEDRIVER_SHORT_VERSION}
+      # Browser version
+      ${EDGE_SHORT_VERSION}
+    )
+  fi
 
   for edge_tag in "${EDGE_TAGS[@]}"; do
     docker tag ${NAMESPACE}/node-edge:${TAG_VERSION} ${NAMESPACE}/node-edge:${edge_tag}
@@ -155,6 +172,7 @@ edge)
 
   ;;
 firefox)
+  echo "Selenium Grid version -> ${TAG_VERSION}"
   FIREFOX_VERSION=$(docker run --rm ${NAMESPACE}/node-firefox:${TAG_VERSION} firefox --version | awk '{print $3}')
   echo "Firefox version -> "${FIREFOX_VERSION}
   FIREFOX_SHORT_VERSION="$(short_version ${FIREFOX_VERSION})"
@@ -168,23 +186,27 @@ firefox)
     ${FIREFOX_VERSION}-geckodriver-${GECKODRIVER_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${FIREFOX_VERSION}-geckodriver-${GECKODRIVER_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${FIREFOX_VERSION}-geckodriver-${GECKODRIVER_VERSION}
     # Browser version and build date
     ${FIREFOX_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${FIREFOX_VERSION}
     ## Short versions
     ${FIREFOX_SHORT_VERSION}-geckodriver-${GECKODRIVER_SHORT_VERSION}-grid-${TAG_VERSION}
     # Browser version and browser driver version plus build date
     ${FIREFOX_SHORT_VERSION}-geckodriver-${GECKODRIVER_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version and browser driver version
-    ${FIREFOX_SHORT_VERSION}-geckodriver-${GECKODRIVER_SHORT_VERSION}
     # Browser version and build date
     ${FIREFOX_SHORT_VERSION}-${BUILD_DATE}
-    # Browser version
-    ${FIREFOX_SHORT_VERSION}
   )
+  if [ "${RELEASE_OLD_VERSION}" = "false" ]; then
+    FIREFOX_TAGS+=(
+      # Browser version and browser driver version
+      ${FIREFOX_VERSION}-geckodriver-${GECKODRIVER_VERSION}
+      # Browser version
+      ${FIREFOX_VERSION}
+      # Browser version and browser driver version
+      ${FIREFOX_SHORT_VERSION}-geckodriver-${GECKODRIVER_SHORT_VERSION}
+      # Browser version
+      ${FIREFOX_SHORT_VERSION}
+    )
+  fi
 
   for firefox_tag in "${FIREFOX_TAGS[@]}"; do
     docker tag ${NAMESPACE}/node-firefox:${TAG_VERSION} ${NAMESPACE}/node-firefox:${firefox_tag}
