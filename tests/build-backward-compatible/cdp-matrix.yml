@@ -10,7 +10,7 @@ matrix:
       FIREFOX_VERSION: '133.0.3'
     #2025
     132:
-      EDGE_VERSION: 'microsoft-edge-stable=132.0.2957.127-1'
+      EDGE_VERSION: 'microsoft-edge-stable=132.0.2957.140-1'
       CHROME_VERSION: 'google-chrome-stable=132.0.6834.159-1'
       FIREFOX_VERSION: '132.0.2'
     131:
