@@ -196,8 +196,10 @@ edge_dev:
 edge_beta:
 	cd ./NodeEdge && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg EDGE_VERSION=microsoft-edge-beta -t $(NAME)/node-edge:beta .
 
-firefox: node_base
+firefox_only:
 	cd ./NodeFirefox && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg FIREFOX_DOWNLOAD_URL=$(FIREFOX_DOWNLOAD_URL) -t $(NAME)/node-firefox:$(TAG_VERSION) .
+
+firefox: node_base firefox_only
 
 firefox_dev:
 	cd ./NodeFirefox && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg FIREFOX_VERSION=devedition-latest -t $(NAME)/node-firefox:dev .
@@ -211,8 +213,10 @@ docker: base
 standalone_docker: docker
 	cd ./StandaloneDocker && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) -t $(NAME)/standalone-docker:$(TAG_VERSION) .
 
-standalone_firefox: firefox
+standalone_firefox_only:
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg BASE=node-firefox -t $(NAME)/standalone-firefox:$(TAG_VERSION) .
+
+standalone_firefox: firefox standalone_firefox_only
 
 standalone_firefox_dev: firefox_dev
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --sbom=true --attest type=provenance,mode=max \

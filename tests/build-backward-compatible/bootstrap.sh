@@ -29,8 +29,12 @@ for CDP_VERSION in "${VERSION_LIST[@]}"; do
   export $(cat .env | xargs)
   if [ "${BROWSER}" = "all" ] || [ "${BROWSER}" = "firefox" ] && [ "${SKIP_BUILD}" = "false" ]; then
     if [ -n "${FIREFOX_VERSION}" ]; then
-      BUILD_ARGS="--build-arg FIREFOX_VERSION=${FIREFOX_VERSION}"
-      BUILD_ARGS="${BUILD_ARGS}" make standalone_firefox
+      BUILD_ARGS="--build-arg FIREFOX_VERSION=${FIREFOX_VERSION} --build-arg FIREFOX_DOWNLOAD_URL=${FIREFOX_DOWNLOAD_URL}"
+      if [ "${REUSE_BASE}" = "true" ]; then
+        BUILD_ARGS="${BUILD_ARGS}" make firefox_only standalone_firefox_only
+      else
+        BUILD_ARGS="${BUILD_ARGS}" make standalone_firefox
+      fi
     else
       echo "Firefox version not found in matrix for input ${CDP_VERSION}"
       exit 1

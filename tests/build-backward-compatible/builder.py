@@ -44,6 +44,12 @@ if __name__ == '__main__':
       if browser_name == "firefox" or browser_name == "all":
         FIREFOX_VERSION = matrix["CDP"][cdp_version]["FIREFOX_VERSION"]
         f.write(f"FIREFOX_VERSION={FIREFOX_VERSION}\n")
+        if "FIREFOX_DOWNLOAD_URL" in matrix["CDP"][cdp_version]:
+          FIREFOX_DOWNLOAD_URL = matrix["CDP"][cdp_version]["FIREFOX_DOWNLOAD_URL"]
+          f.write(f"FIREFOX_DOWNLOAD_URL={FIREFOX_DOWNLOAD_URL}\n")
+        if "FIREFOX_PLATFORMS" in matrix["CDP"][cdp_version]:
+          FIREFOX_PLATFORMS = matrix["CDP"][cdp_version]["FIREFOX_PLATFORMS"]
+          f.write(f"PLATFORMS={FIREFOX_PLATFORMS}\n")
       if browser_name == "edge" or browser_name == "all":
         EDGE_VERSION = matrix["CDP"][cdp_version]["EDGE_VERSION"]
         f.write(f"EDGE_VERSION={EDGE_VERSION}\n")
