@@ -21,7 +21,7 @@ find . \( -type d -name .git -prune \) -o -type f ! -name 'CHANGELOG.md' -print0
 find . \( -type d -name .git -prune \) -o -type f ! -name 'CHANGELOG.md' -print0 | xargs -0 sed -i "s/${KEDA_TAG_PREV_VERSION}/${KEDA_TAG_VERSION}/g"
 
 # If you want to test this locally and you are using macOS, do `brew install gnu-sed` and change `sed` for `gsed`.
-find . \( -type d -name .git -prune \) -o -type f ! -name 'CHANGELOG.md' -print0 | xargs -0 sed -i "s/${LATEST_TAG}/${NEXT_TAG}/g"
+find . \( -type d -name .git -prune -o -type d -name 'CHANGELOG' -prune \) -o -type f ! -name 'CHANGELOG.md' -print0 | xargs -0 sed -i "s/${LATEST_TAG}/${NEXT_TAG}/g"
 
 if [[ "$NEXT_TAG" == "latest" ]] || [[ "$NEXT_TAG" == "nightly" ]]; then
   # If you want to test this locally and you are using macOS, do `brew install gnu-sed` and change `sed` for `gsed`.

@@ -177,12 +177,15 @@ jobs:
         uses: peter-evans/create-pull-request@main
         with:
           token: ${{ secrets.SELENIUM_CI_TOKEN }}
-          commit-message: "[ci] Upload CHANGELOG for Node/Standalone ${{ env.BROWSER_NAME }} version with Grid ${{ env.GRID_VERSION }}"
-          title: "[ci] Upload CHANGELOG for Node/Standalone ${{ env.BROWSER_NAME }} version with Grid ${{ env.GRID_VERSION }}"
-          body: "This PR contains the CHANGELOG for Node/Standalone Edge with specific browser versions: ${{ github.event.inputs.browser-versions }}"
+          commit-message: |
+            [ci] Upload CHANGELOG for Node/Standalone ${{ env.BROWSER_NAME }} version with Grid ${{ env.GRID_VERSION }}
+            
+            Browser versions: ${{ github.event.inputs.browser-versions }}
+          title: "[ci] CHANGELOG for Node/Standalone ${{ env.BROWSER_NAME }} browser versions with Grid ${{ env.GRID_VERSION }}"
+          body: "This PR contains the CHANGELOG for Node/Standalone ${{ env.BROWSER_NAME }} with specific browser versions: ${{ github.event.inputs.browser-versions }}"
           committer: 'Selenium CI Bot <selenium-ci@users.noreply.github.com>'
           author: 'Selenium CI Bot <selenium-ci@users.noreply.github.com>'
-          branch: browser-node-changelog
+          branch: browser-node-${{ env.BROWSER_NAME }}-changelog
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
