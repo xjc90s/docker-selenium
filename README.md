@@ -183,7 +183,7 @@ A single command to enable that feature in Docker Engine:
 make set_containerd_image_store
 ```
 
-To build all the images for multiplatform, run the following command:
+To build all the images for multiplatform at once, run the following command:
 
 ```bash
 PLATFORMS=linux/amd64,linux/arm64 make build
@@ -195,7 +195,13 @@ To build the images for a specific platform, run the following command:
 PLATFORMS=linux/arm64 make build
 ```
 
-By default, without specifying the `PLATFORMS` variable, the images are built for the `linux/amd64` platform.
+By default, without specifying the `PLATFORMS` variable, the images are built with current host architecture.
+
+Similarly, if you are using host ARM64 architecture, you can build the images for AMD64 architecture by running the following command:
+
+```bash
+PLATFORMS=linux/amd64 make build
+```
 
 ___
 

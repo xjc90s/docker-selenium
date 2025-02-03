@@ -92,10 +92,11 @@ for CDP_VERSION in "${VERSION_LIST[@]}"; do
   fi
 
   if [ "${PUSH_IMAGE}" = "false" ]; then
-    echo -n "" > ./CHANGELOG/${SELENIUM_VERSION}/${BROWSER}_${CDP_VERSION}.md
+    echo "\`\`\`" > ./CHANGELOG/${SELENIUM_VERSION}/${BROWSER}_${CDP_VERSION}.md
     echo "$TAG_LOG_OUTPUT" | while IFS= read -r line; do
       echo "$line" >> ./CHANGELOG/${SELENIUM_VERSION}/${BROWSER}_${CDP_VERSION}.md
     done ;
+    echo "\`\`\`" >> ./CHANGELOG/${SELENIUM_VERSION}/${BROWSER}_${CDP_VERSION}.md
   else
     echo "${TAG_LOG_OUTPUT}"
   fi

@@ -160,6 +160,8 @@ jobs:
           echo "GRID_VERSION=${GRID_VERSION}" >> $GITHUB_ENV
         env:
           GRID_VERSION: ${{ needs.deploy.outputs.GRID_VERSION }}
+      - name: Create CHANGELOG directory
+        run: mkdir -p ./CHANGELOG/${{ env.GRID_VERSION }}
       - name: Download results
         uses: actions/download-artifact@v4
         with:
