@@ -3,7 +3,7 @@ matrix:
   # Edge: https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/
   # Chrome: https://www.ubuntuupdates.org/package/google_chrome/stable/main/base/google-chrome-stable/ or https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/
   # Firefox: https://download-installer.cdn.mozilla.net/pub/firefox/releases/
-  CDP:
+  browser:
     135:
       FIREFOX_VERSION:
       FIREFOX_DOWNLOAD_URL: 'https://download-installer.cdn.mozilla.net/pub/firefox/nightly/2025/01/2025-01-06-09-47-46-mozilla-central/firefox-135.0a1.en-US.linux-aarch64.deb'

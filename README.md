@@ -1451,7 +1451,7 @@ $ ./tests/build-backward-compatible/bootstrap.sh 4.17.0 119,120,123 chrome
 
 In generic, the script takes the following arguments:
 - `$1` (mandatory): Selenium Grid version. Details are fetching from matrix [file](tests/build-backward-compatible/selenium-matrix.yml)
-- `$2` (mandatory): Browser major version, multiple values separated by comma. Details are fetching from matrix [file](tests/build-backward-compatible/cdp-matrix.yml)
+- `$2` (mandatory): Browser major version, multiple values separated by comma. Details are fetching from matrix [file](tests/build-backward-compatible/browser-matrix.yml)
 - `$3` (optional): browser name. If not provided, it will iterate over all the browsers (`chrome`, `edge`, `firefox`)
 - `$4` (optional): Push image to registry. By default, it is `false`. If you want to push the image to the registry, set it to `true` (required Docker login to your namespace done before running the script).
 

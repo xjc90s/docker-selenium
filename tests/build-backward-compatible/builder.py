@@ -23,13 +23,13 @@ def recursive_merge(dict1, dict2):
 if __name__ == '__main__':
     # Load matrix configuration
     selenium_matrix = load_template('tests/build-backward-compatible/selenium-matrix.yml')
-    cdp_matrix = load_template('tests/build-backward-compatible/cdp-matrix.yml')
+    browser_matrix = load_template('tests/build-backward-compatible/browser-matrix.yml')
     # Merge configurations into single matrix
-    recursive_merge(selenium_matrix, cdp_matrix)
+    recursive_merge(selenium_matrix, browser_matrix)
     matrix = selenium_matrix["matrix"]
     # Get versions from arguments
     selenium_version = sys.argv[1]
-    cdp_version = int(sys.argv[2])
+    browser_version = int(sys.argv[2])
     browser_name = sys.argv[3]
     # Create .env with component versions
     with open('.env', 'w') as f:
@@ -42,19 +42,19 @@ if __name__ == '__main__':
       f.write(f"VERSION={VERSION}\n")
       f.write(f"BINDING_VERSION={BINDING_VERSION}\n")
       if browser_name == "firefox" or browser_name == "all":
-        FIREFOX_VERSION = matrix["CDP"][cdp_version]["FIREFOX_VERSION"]
+        FIREFOX_VERSION = matrix["browser"][browser_version]["FIREFOX_VERSION"]
         f.write(f"FIREFOX_VERSION={FIREFOX_VERSION}\n")
-        if "FIREFOX_DOWNLOAD_URL" in matrix["CDP"][cdp_version]:
-          FIREFOX_DOWNLOAD_URL = matrix["CDP"][cdp_version]["FIREFOX_DOWNLOAD_URL"]
+        if "FIREFOX_DOWNLOAD_URL" in matrix["browser"][browser_version]:
+          FIREFOX_DOWNLOAD_URL = matrix["browser"][browser_version]["FIREFOX_DOWNLOAD_URL"]
           f.write(f"FIREFOX_DOWNLOAD_URL={FIREFOX_DOWNLOAD_URL}\n")
-        if "FIREFOX_PLATFORMS" in matrix["CDP"][cdp_version]:
-          FIREFOX_PLATFORMS = matrix["CDP"][cdp_version]["FIREFOX_PLATFORMS"]
+        if "FIREFOX_PLATFORMS" in matrix["browser"][browser_version]:
+          FIREFOX_PLATFORMS = matrix["browser"][browser_version]["FIREFOX_PLATFORMS"]
           f.write(f"PLATFORMS={FIREFOX_PLATFORMS}\n")
         else:
           f.write(f"PLATFORMS=linux/amd64\n")
       if browser_name == "edge" or browser_name == "all":
-        EDGE_VERSION = matrix["CDP"][cdp_version]["EDGE_VERSION"]
+        EDGE_VERSION = matrix["browser"][browser_version]["EDGE_VERSION"]
         f.write(f"EDGE_VERSION={EDGE_VERSION}\n")
       if browser_name == "chrome" or browser_name == "all":
-        CHROME_VERSION = matrix["CDP"][cdp_version]["CHROME_VERSION"]
+        CHROME_VERSION = matrix["browser"][browser_version]["CHROME_VERSION"]
         f.write(f"CHROME_VERSION={CHROME_VERSION}")
