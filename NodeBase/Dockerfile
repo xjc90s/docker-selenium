@@ -101,6 +101,11 @@ RUN apt-get update -qqy \
     fonts-wqy-zenhei \
     fonts-tlwg-loma-otf \
     fonts-noto-color-emoji \
+#==============================
+# shared system certificate support
+#==============================
+    p11-kit \
+    p11-kit-modules \
   && locale-gen ${LANGUAGE} \
   && dpkg-reconfigure --frontend noninteractive locales \
   && apt-get -qyy autoremove \
@@ -152,7 +157,8 @@ COPY --chown="${SEL_UID}:${SEL_GID}" start-selenium-node.sh \
       start-xvfb.sh \
       start-vnc.sh \
       start-novnc.sh \
-      generate_config generate_relay_config /opt/bin/
+      generate_config generate_relay_config json_merge.py /opt/bin/
+RUN chmod +x /opt/bin/*.sh /opt/bin/*.py /opt/bin/generate_*
 
 # Selenium Grid logo as wallpaper for Fluxbox
 COPY selenium_grid_logo.png /usr/share/images/fluxbox/ubuntu-light.png

@@ -13,9 +13,9 @@ The stable implementation will be merged to the upstream KEDA repository frequen
 Replace the image registry and tag of these KEDA components with the patched image tag:
 
 ```bash
-docker pull selenium/keda:2.16.1-selenium-grid-20250101
-docker pull selenium/keda-metrics-apiserver:2.16.1-selenium-grid-20250101
-docker pull selenium/keda-admission-webhooks:2.16.1-selenium-grid-20250101
+docker pull selenium/keda:2.16.1-selenium-grid-20250202
+docker pull selenium/keda-metrics-apiserver:2.16.1-selenium-grid-20250202
+docker pull selenium/keda-admission-webhooks:2.16.1-selenium-grid-20250202
 ```
 
 Besides that, you also can use image tag `latest` or `nightly`.
@@ -27,15 +27,15 @@ If you are deploying KEDA core using their official Helm [chart](https://github.
     keda:
       registry: selenium
       repository: keda
-      tag: "2.16.1-selenium-grid-20250101"
+      tag: "2.16.1-selenium-grid-20250202"
     metricsApiServer:
       registry: selenium
       repository: keda-metrics-apiserver
-      tag: "2.16.1-selenium-grid-20250101"
+      tag: "2.16.1-selenium-grid-20250202"
     webhooks:
       registry: selenium
       repository: keda-admission-webhooks
-      tag: "2.16.1-selenium-grid-20250101"
+      tag: "2.16.1-selenium-grid-20250202"
 ```
 
 If you are deployment Selenium Grid chart with `autoscaling.enabled` is `true` (implies installing KEDA sub-chart), KEDA images registry and tag already set in the `values.yaml`. Refer to list [configuration](../charts/selenium-grid/CONFIGURATION.md).
@@ -49,7 +49,9 @@ You can involve to review and discuss the pull requests to help us early detect 
 
 [kedacore/keda](https://github.com/kedacore/keda)
 
-- https://github.com/kedacore/keda/pull/6477
+- https://github.com/kedacore/keda/pull/6536 (plan, v2.17.0)
+
+- https://github.com/kedacore/keda/pull/6477 (plan, v2.17.0)
 
 - ~~https://github.com/kedacore/keda/pull/6437 (merged, v2.16.1)~~
 
@@ -59,9 +61,11 @@ You can involve to review and discuss the pull requests to help us early detect 
 
 [kedacore/keda-docs](https://github.com/kedacore/keda-docs)
 
-- https://github.com/kedacore/keda-docs/pull/1522
+- https://github.com/kedacore/keda-docs/pull/1533 (plan, v2.17.0)
 
-- https://github.com/kedacore/keda-docs/pull/1515
+- https://github.com/kedacore/keda-docs/pull/1522 (plan, v2.17.0)
+
+- ~~https://github.com/kedacore/keda-docs/pull/1515 (merged, v2.16.1)~~
 
 - ~~https://github.com/kedacore/keda-docs/pull/1468 (merged, v2.16.0)~~
 

@@ -1,4 +1,4 @@
-FROM ubuntu:noble-20241118.1
+FROM ubuntu:noble-20250127
 ARG AUTHORS=SeleniumHQ
 LABEL authors="${AUTHORS} <selenium-developers@googlegroups.com>"
 LABEL org.opencontainers.image.source="https://github.com/${AUTHORS}/docker-selenium"
@@ -6,13 +6,13 @@ LABEL org.opencontainers.image.source="https://github.com/${AUTHORS}/docker-sele
 # Arguments to define the version of dependencies to download
 ARG VERSION
 ARG RELEASE=selenium-${VERSION}
+ARG MVN_SELENIUM_VERSION
 # Default value should be aligned with upstream Selenium (https://github.com/SeleniumHQ/selenium/blob/trunk/MODULE.bazel)
 ARG OPENTELEMETRY_VERSION=1.46.0
 ARG GRPC_VERSION=1.69.0
 ARG NETTY_VERSION=4.1.117.Final
 ARG CS_VERSION=2.1.18
 ARG POSTGRESQL_VERSION=42.7.5
-ARG MVN_SELENIUM_VERSION=4.28.0
 
 #Arguments to define the user running Selenium
 ARG SEL_USER=seluser
@@ -21,7 +21,7 @@ ARG HOME=/home/${SEL_USER}
 ARG UID=1200
 ARG GID=1201
 ARG TZ="UTC"
-ARG JRE_VERSION=17
+ARG JRE_VERSION=21
 ARG TARGETARCH
 ARG TARGETVARIANT
 
@@ -44,12 +44,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Miscellaneous packages
 # Includes minimal runtime used for executing non GUI Java programs
 #========================
-RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
-      echo "deb http://archive.ubuntu.com/ubuntu noble main universe\n" > /etc/apt/sources.list \
-      && echo "deb http://archive.ubuntu.com/ubuntu noble-updates main universe\n" >> /etc/apt/sources.list \
-      && echo "deb http://security.ubuntu.com/ubuntu noble-security main universe\n" >> /etc/apt/sources.list ; \
-     fi \
-  && apt-get -qqy update \
+RUN apt-get -qqy update \
   && apt-get upgrade -yq \
   && apt-get -qqy --no-install-recommends install \
     acl \
@@ -133,7 +128,6 @@ RUN --mount=type=secret,id=SEL_PASSWD \
         org.postgresql:postgresql:${POSTGRESQL_VERSION} \
         org.seleniumhq.selenium:selenium-session-map-redis:${MVN_SELENIUM_VERSION} \
         # Patch specific version for CVEs in the dependencies
-        io.lettuce:lettuce-core:6.5.1.RELEASE \
         > /external_jars/.classpath_session_map.txt \
         && chmod 664 /external_jars/.classpath_session_map.txt ; \
      fi \

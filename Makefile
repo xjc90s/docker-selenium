@@ -2,16 +2,18 @@ NAME := $(or $(NAME),$(NAME),selenium)
 CURRENT_DATE := $(shell date '+%Y%m%d')
 BUILD_DATE := $(or $(BUILD_DATE),$(BUILD_DATE),$(CURRENT_DATE))
 BASE_RELEASE := $(or $(BASE_RELEASE),$(BASE_RELEASE),selenium-4.28.0)
-BASE_VERSION := $(or $(BASE_VERSION),$(BASE_VERSION),4.28.0)
-BINDING_VERSION := $(or $(BINDING_VERSION),$(BINDING_VERSION),4.28.0)
+BASE_VERSION := $(or $(BASE_VERSION),$(BASE_VERSION),4.28.1)
+BINDING_VERSION := $(or $(BINDING_VERSION),$(BINDING_VERSION),4.28.1)
 BASE_RELEASE_NIGHTLY := $(or $(BASE_RELEASE_NIGHTLY),$(BASE_RELEASE_NIGHTLY),nightly)
 BASE_VERSION_NIGHTLY := $(or $(BASE_VERSION_NIGHTLY),$(BASE_VERSION_NIGHTLY),4.29.0-SNAPSHOT)
-VERSION := $(or $(VERSION),$(VERSION),4.28.0)
+VERSION := $(or $(VERSION),$(VERSION),4.28.1)
+MVN_SELENIUM_VERSION := $(or $(MVN_SELENIUM_VERSION),$(MVN_SELENIUM_VERSION),4.28.1)
 TAG_VERSION := $(VERSION)-$(BUILD_DATE)
 CHART_VERSION_NIGHTLY := $(or $(CHART_VERSION_NIGHTLY),$(CHART_VERSION_NIGHTLY),1.0.0-nightly)
 NAMESPACE := $(or $(NAMESPACE),$(NAMESPACE),$(NAME))
 AUTHORS := $(or $(AUTHORS),$(AUTHORS),SeleniumHQ)
 PUSH_IMAGE := $(or $(PUSH_IMAGE),$(PUSH_IMAGE),false)
+RELEASE_OLD_VERSION := $(or $(RELEASE_OLD_VERSION),$(RELEASE_OLD_VERSION),false)
 FROM_IMAGE_ARGS := --build-arg NAMESPACE=$(NAMESPACE) --build-arg VERSION=$(TAG_VERSION) --build-arg AUTHORS=$(AUTHORS) --sbom=true --attest type=provenance,mode=max
 BUILD_ARGS := $(BUILD_ARGS) --progress plain
 MAJOR := $(word 1,$(subst ., ,$(TAG_VERSION)))
@@ -26,13 +28,13 @@ CURRENT_PLATFORM := $(shell if [ `arch` = "aarch64" ] || [ `arch` = "arm64" ]; t
 PLATFORMS := $(or $(PLATFORMS),$(shell echo $$PLATFORMS),$(CURRENT_PLATFORM))
 SEL_PASSWD := $(or $(SEL_PASSWD),$(SEL_PASSWD),secret)
 CHROMIUM_VERSION := $(or $(CHROMIUM_VERSION),$(CHROMIUM_VERSION),latest)
-FIREFOX_DOWNLOAD_URL := $(or $(FIREFOX_DOWNLOAD_URL),$(FIREFOX_DOWNLOAD_URL),https://download-installer.cdn.mozilla.net/pub/firefox/nightly/2024/11/2024-11-25-09-40-45-mozilla-central/firefox-134.0a1.en-US.linux-aarch64.deb)
+FIREFOX_DOWNLOAD_URL := $(or $(FIREFOX_DOWNLOAD_URL),$(FIREFOX_DOWNLOAD_URL),https://download-installer.cdn.mozilla.net/pub/firefox/nightly/2025/01/2025-01-06-09-47-46-mozilla-central/firefox-135.0a1.en-US.linux-aarch64.deb)
 SBOM_OUTPUT := $(or $(SBOM_OUTPUT),$(SBOM_OUTPUT),package_versions.txt)
 KEDA_TAG_PREV_VERSION := $(or $(KEDA_TAG_PREV_VERSION),$(KEDA_TAG_PREV_VERSION),2.16.1-selenium-grid)
 KEDA_CORE_VERSION := $(or $(KEDA_CORE_VERSION),$(KEDA_CORE_VERSION),2.16.1)
 KEDA_TAG_VERSION := $(or $(KEDA_TAG_VERSION),$(KEDA_TAG_VERSION),2.16.1-selenium-grid)
 KEDA_BASED_NAME := $(or $(KEDA_BASED_NAME),$(KEDA_BASED_NAME),ndviet)
-KEDA_BASED_TAG := $(or $(KEDA_BASED_TAG),$(KEDA_BASED_TAG),2.16.1-selenium-grid-20250108)
+KEDA_BASED_TAG := $(or $(KEDA_BASED_TAG),$(KEDA_BASED_TAG),2.16.1-selenium-grid-20250210)
 TEST_PATCHED_KEDA := $(or $(TEST_PATCHED_KEDA),$(TEST_PATCHED_KEDA),true)
 
 all: hub \
@@ -70,8 +72,8 @@ set_containerd_image_store:
 	docker info -f '{{ .DriverStatus }}'
 
 format_shell_scripts:
-	sudo apt-get update -qq ; \
-  sudo apt-get install -yq shfmt ; \
+	sudo apt-get update -qq || true ; \
+  sudo apt-get install -yq shfmt || true ; \
   shfmt -l -w -d $${PWD}/*.sh $${PWD}/**/*.sh $$PWD/**.sh $$PWD/**/generate_** $$PWD/**/wrap_* ; \
   git diff --stat --exit-code ; \
   EXIT_CODE=$$? ; \
@@ -127,7 +129,7 @@ gen_certs:
 
 base: prepare_resources gen_certs
 	cd ./Base && SEL_PASSWD=$(SEL_PASSWD) docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --build-arg VERSION=$(BASE_VERSION) --build-arg RELEASE=$(BASE_RELEASE) --build-arg AUTHORS=$(AUTHORS) \
-	--secret id=SEL_PASSWD --sbom=true --attest type=provenance,mode=max -t $(NAME)/base:$(TAG_VERSION) .
+	--build-arg MVN_SELENIUM_VERSION=$(MVN_SELENIUM_VERSION) --secret id=SEL_PASSWD --sbom=true --attest type=provenance,mode=max -t $(NAME)/base:$(TAG_VERSION) .
 
 base_nightly:
 	BASE_VERSION=$(BASE_VERSION_NIGHTLY) BASE_RELEASE=$(BASE_RELEASE_NIGHTLY) make base
@@ -153,7 +155,7 @@ event_bus: base
 node_base: base video
 	cd ./NodeBase && SEL_PASSWD=$(SEL_PASSWD) docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg BASE=video --build-arg VERSION=$(FFMPEG_TAG_VERSION)-$(BUILD_DATE) --secret id=SEL_PASSWD -t $(NAME)/node-base:$(TAG_VERSION) .
 
-chrome: node_base
+chrome_only:
 	case "$(PLATFORMS)" in \
     *linux/amd64*) \
       echo "Google Chrome is only supported on linux/amd64" \
@@ -164,6 +166,8 @@ chrome: node_base
       ;; \
   esac
 
+chrome: node_base chrome_only
+
 chrome_dev:
 	cd ./NodeChrome && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg CHROME_VERSION=google-chrome-unstable -t $(NAME)/node-chrome:dev .
 
@@ -173,7 +177,7 @@ chrome_beta:
 chromium: node_base
 	cd ./NodeChromium && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg CHROMIUM_VERSION=$(CHROMIUM_VERSION) -t $(NAME)/node-chromium:$(TAG_VERSION) .
 
-edge: node_base
+edge_only:
 	case "$(PLATFORMS)" in \
     *linux/amd64*) \
       echo "Microsoft Edge is only supported on linux/amd64" \
@@ -184,14 +188,18 @@ edge: node_base
       ;; \
   esac
 
+edge: node_base edge_only
+
 edge_dev:
 	cd ./NodeEdge && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg EDGE_VERSION=microsoft-edge-dev -t $(NAME)/node-edge:dev .
 
 edge_beta:
 	cd ./NodeEdge && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg EDGE_VERSION=microsoft-edge-beta -t $(NAME)/node-edge:beta .
 
-firefox: node_base
+firefox_only:
 	cd ./NodeFirefox && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg FIREFOX_DOWNLOAD_URL=$(FIREFOX_DOWNLOAD_URL) -t $(NAME)/node-firefox:$(TAG_VERSION) .
+
+firefox: node_base firefox_only
 
 firefox_dev:
 	cd ./NodeFirefox && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg FIREFOX_VERSION=devedition-latest -t $(NAME)/node-firefox:dev .
@@ -205,8 +213,10 @@ docker: base
 standalone_docker: docker
 	cd ./StandaloneDocker && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) -t $(NAME)/standalone-docker:$(TAG_VERSION) .
 
-standalone_firefox: firefox
+standalone_firefox_only:
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg BASE=node-firefox -t $(NAME)/standalone-firefox:$(TAG_VERSION) .
+
+standalone_firefox: firefox standalone_firefox_only
 
 standalone_firefox_dev: firefox_dev
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --sbom=true --attest type=provenance,mode=max \
@@ -216,7 +226,7 @@ standalone_firefox_beta: firefox_beta
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --sbom=true --attest type=provenance,mode=max \
 	--build-arg NAMESPACE=$(NAME) --build-arg VERSION=beta --build-arg BASE=node-firefox -t $(NAME)/standalone-firefox:beta .
 
-standalone_chrome: chrome
+standalone_chrome_only:
 	case "$(PLATFORMS)" in \
     *linux/amd64*) \
 			echo "Google Chrome is only supported on linux/amd64" \
@@ -226,6 +236,8 @@ standalone_chrome: chrome
        echo "Google Chrome doesn't support platform $(PLATFORMS)" ; \
       ;; \
   esac
+
+standalone_chrome: chrome standalone_chrome_only
 
 standalone_chrome_dev: chrome_dev
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --sbom=true --attest type=provenance,mode=max \
@@ -238,7 +250,7 @@ standalone_chrome_beta: chrome_beta
 standalone_chromium: chromium
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) $(FROM_IMAGE_ARGS) --build-arg BASE=node-chromium -t $(NAME)/standalone-chromium:$(TAG_VERSION) .
 
-standalone_edge: edge
+standalone_edge_only:
 	case "$(PLATFORMS)" in \
     *linux/amd64*) \
       echo "Microsoft Edge is only supported on linux/amd64" \
@@ -248,6 +260,8 @@ standalone_edge: edge
        echo "Microsoft Edge doesn't support platform $(PLATFORMS)" ; \
       ;; \
   esac
+
+standalone_edge: edge standalone_edge_only
 
 standalone_edge_dev: edge_dev
 	cd ./Standalone && docker buildx build --platform $(PLATFORMS) $(BUILD_ARGS) --sbom=true --attest type=provenance,mode=max \
@@ -268,7 +282,7 @@ fetch_grid_scaler_resources:
 	&& cd ./.keda/scalers \
 	&& curl -L https://raw.githubusercontent.com/$(KEDA_BASED_NAME)/keda/v$(KEDA_BASED_TAG)/pkg/scalers/selenium_grid_scaler.go -o selenium_grid_scaler.go \
 	&& curl -L https://raw.githubusercontent.com/$(KEDA_BASED_NAME)/keda/v$(KEDA_BASED_TAG)/pkg/scalers/selenium_grid_scaler_test.go -o selenium_grid_scaler_test.go \
-	&& curl -L https://raw.githubusercontent.com/$(KEDA_BASED_NAME)/keda-docs/main/content/docs/2.16/scalers/selenium-grid-scaler.md -o selenium-grid-scaler.md
+	&& curl -L https://raw.githubusercontent.com/$(KEDA_BASED_NAME)/keda-docs/main/content/docs/2.17/scalers/selenium-grid-scaler.md -o selenium-grid-scaler.md
 
 fetch_grid_scaler_images:
 	docker pull --platform linux/amd64 --platform linux/arm64 $(KEDA_BASED_NAME)/keda:$(KEDA_BASED_TAG)
@@ -337,16 +351,16 @@ edge_upgrade_version:
 tag_and_push_browser_images: tag_and_push_chrome_images tag_and_push_chromium_images tag_and_push_firefox_images tag_and_push_edge_images
 
 tag_and_push_chrome_images:
-	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) chrome
+	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) chrome $(RELEASE_OLD_VERSION)
 
 tag_and_push_chromium_images:
-	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) chromium
+	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) chromium $(RELEASE_OLD_VERSION)
 
 tag_and_push_edge_images:
-	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) edge
+	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) edge $(RELEASE_OLD_VERSION)
 
 tag_and_push_firefox_images:
-	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) firefox
+	./tag_and_push_browser_images.sh $(VERSION) $(BUILD_DATE) $(NAMESPACE) $(PUSH_IMAGE) firefox $(RELEASE_OLD_VERSION)
 
 tag_ffmpeg_latest:
 	docker tag $(NAME)/ffmpeg:$(FFMPEG_VERSION)-$(BUILD_DATE) $(NAME)/ffmpeg:latest
@@ -650,7 +664,7 @@ test_edge_standalone:
   esac
 
 test_firefox_download_lang_packs:
-	FIREFOX_VERSION=$$(curl -sk https://product-details.mozilla.org/1.0/firefox_versions.json | jq -r '.LATEST_FIREFOX_VERSION') ; \
+	FIREFOX_VERSION=$(or $(FIREFOX_VERSION), $$(curl -sk https://product-details.mozilla.org/1.0/firefox_versions.json | jq -r '.LATEST_FIREFOX_VERSION')) ; \
 	./NodeFirefox/get_lang_package.sh $$FIREFOX_VERSION ./tests/target/firefox_lang_packs
 
 test_firefox: test_firefox_download_lang_packs
@@ -958,7 +972,7 @@ chart_test_autoscaling_deployment:
 	./tests/charts/make/chart_test.sh DeploymentAutoscaling
 
 chart_test_autoscaling_job_https:
-	PLATFORMS=$(PLATFORMS) TEST_EXISTING_KEDA=true RELEASE_NAME=selenium CHART_ENABLE_BASIC_AUTH=true SELENIUM_GRID_MONITORING=false TEST_PATCHED_KEDA=$(TEST_PATCHED_KEDA) TEST_MULTIPLE_PLATFORMS=true \
+	PLATFORMS=$(PLATFORMS) TEST_EXISTING_KEDA=true TEST_CHROMIUM=true RELEASE_NAME=selenium CHART_ENABLE_BASIC_AUTH=true SELENIUM_GRID_MONITORING=false TEST_PATCHED_KEDA=$(TEST_PATCHED_KEDA) TEST_MULTIPLE_PLATFORMS=true \
 	SECURE_CONNECTION_SERVER=true SELENIUM_GRID_PROTOCOL=https SELENIUM_GRID_PORT=443 SUB_PATH=/ \
 	MAX_SESSIONS_FIREFOX=1 MAX_SESSIONS_EDGE=2 MAX_SESSIONS_CHROME=3 TEST_NAME_OVERRIDE=true \
 	VERSION=$(TAG_VERSION) VIDEO_TAG=$(FFMPEG_TAG_VERSION)-$(BUILD_DATE) KEDA_BASED_NAME=$(KEDA_BASED_NAME) KEDA_BASED_TAG=$(KEDA_BASED_TAG) NAMESPACE=$(NAMESPACE) BINDING_VERSION=$(BINDING_VERSION) BASE_VERSION=$(BASE_VERSION) EXTERNAL_UPLOADER_CONFIG=true \
@@ -979,7 +993,7 @@ chart_test_autoscaling_job_without_multiple_versions:
 	TEST_MULTIPLE_VERSIONS=false make chart_test_autoscaling_job
 
 chart_test_autoscaling_job:
-	PLATFORMS=$(PLATFORMS) TEST_EXISTING_KEDA=true TEST_CHROMIUM=true RELEASE_NAME=selenium CHART_ENABLE_TRACING=true CHART_FULL_DISTRIBUTED_MODE=true SELENIUM_GRID_MONITORING=false TEST_PATCHED_KEDA=$(TEST_PATCHED_KEDA) \
+	PLATFORMS=$(PLATFORMS) TEST_EXISTING_KEDA=true RELEASE_NAME=selenium CHART_ENABLE_TRACING=true CHART_FULL_DISTRIBUTED_MODE=true SELENIUM_GRID_MONITORING=false TEST_PATCHED_KEDA=$(TEST_PATCHED_KEDA) \
 	CLEAR_POD_HISTORY=true TEST_MULTIPLE_VERSIONS=$(or $(TEST_MULTIPLE_VERSIONS), "true") TEST_MULTIPLE_VERSIONS_EXPLICIT=$(or $(TEST_MULTIPLE_VERSIONS_EXPLICIT), "true") \
 	SECURE_INGRESS_ONLY_CONFIG_INLINE=true SECURE_USE_EXTERNAL_CERT=true CHART_ENABLE_INGRESS_HOSTNAME=true SELENIUM_GRID_PROTOCOL=https SELENIUM_GRID_HOST=selenium-grid.prod SUB_PATH=/ SELENIUM_GRID_PORT=443 \
 	VERSION=$(TAG_VERSION) VIDEO_TAG=$(FFMPEG_TAG_VERSION)-$(BUILD_DATE) KEDA_BASED_NAME=$(KEDA_BASED_NAME) KEDA_BASED_TAG=$(KEDA_BASED_TAG) NAMESPACE=$(NAMESPACE) BINDING_VERSION=$(BINDING_VERSION) BASE_VERSION=$(BASE_VERSION) \

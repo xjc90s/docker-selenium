@@ -1,3 +1,57 @@
+## :heavy_check_mark: selenium-grid-0.39.2
+
+- Chart is using image tag 4.28.1-20250202
+- Chart is tested on Kubernetes versions: v1.26.15,v1.27.16,v1.28.15,v1.29.13,v1.30.9,v1.31.5,v1.32.1
+- Chart is tested on container runtime Docker versions: 26.1.4,27.4.1
+- Chart is tested on Helm versions: v3.11.3,v3.12.3,v3.13.3,v3.14.3,v3.15.4,v3.16.4,v3.17.0
+- Chart is tested autoscaling capabilities with KEDA image tag: 2.16.1-selenium-grid-20250202
+- Selenium Grid Scaler implementation preview. [README](https://github.com/seleniumhq/docker-selenium/tree/trunk/.keda/README.md)
+
+### Added
+- [`c30ae198`](http://github.com/seleniumhq/docker-selenium/commit/c30ae198207a5997848065cfbf779bce9a42f423) - feat: Deploy Node/Standalone Firefox browser version from v98 to v134 (#2632) :: Viet Nguyen Duc
+- [`7f75dd06`](http://github.com/seleniumhq/docker-selenium/commit/7f75dd0607a506668b6c1ff6de71674d1c943dcb) - feat: Deploy Node/Standalone Chrome browser version from v97 to v109 on top of Grid 4.28.1 (#2626) :: Viet Nguyen Duc
+- [`3ac17b96`](http://github.com/seleniumhq/docker-selenium/commit/3ac17b965985ac132ce83cc62ee49744f92cb030) - feat: Release Node/Standalone Chrome browser version from v110 to v131 on top of Grid 4.28.1 (#2621) :: Viet Nguyen Duc
+- [`a7b58a4d`](http://github.com/seleniumhq/docker-selenium/commit/a7b58a4dca01116547459442067e910fdb23a280) - feat: added nodeSelector for keda patch pods (#2618) :: Amar Deep Singh
+
+### Changed
+- [`ad807bf3`](http://github.com/seleniumhq/docker-selenium/commit/ad807bf32d267cd566c25b531c9822f77bc0ea92) - [ci] Update tag 4.28.1-20250202 in docs and files :: Selenium CI Bot
+- [`41f690aa`](http://github.com/seleniumhq/docker-selenium/commit/41f690aa623fa5ea231fb469db07af1136a099e1) - chore(deps): update helm release kube-prometheus-stack to v68.4.4 (#2630) :: renovate[bot]
+- [`96453331`](http://github.com/seleniumhq/docker-selenium/commit/96453331fdcd98a444c92d26af5a6fb55993a160) - chore(deps): update helm release kube-prometheus-stack to v68.4.3 (#2622) :: renovate[bot]
+- [`1f167b93`](http://github.com/seleniumhq/docker-selenium/commit/1f167b9379b6fe07414d1b8492e1a0995a25baf8) - Update Helm release kube-prometheus-stack to v68.4.0 (#2619) :: renovate[bot]
+- [`e461dc8d`](http://github.com/seleniumhq/docker-selenium/commit/e461dc8d7c07b7a0aded7e6ccce8e2f1371478db) - Update Helm release kube-prometheus-stack to v68.3.2 (#2613) :: renovate[bot]
+- [`04bb9cd9`](http://github.com/seleniumhq/docker-selenium/commit/04bb9cd9fe144215b66bf66080bbc2c366a1ce3b) - [ci] Update chart 0.39.1 changelog :: Selenium CI Bot
+
+## :heavy_check_mark: selenium-grid-0.39.1
+
+- Chart is using image tag 4.28.1-20250123
+- Chart is tested on Kubernetes versions: v1.26.15,v1.27.16,v1.28.15,v1.29.13,v1.30.9,v1.31.5,v1.32.1
+- Chart is tested on container runtime Docker versions: 26.1.4,27.4.1
+- Chart is tested on Helm versions: v3.11.3,v3.12.3,v3.13.3,v3.14.3,v3.15.4,v3.16.4,v3.17.0
+- Chart is tested autoscaling capabilities with KEDA image tag: 2.16.1-selenium-grid-20250123
+- Selenium Grid Scaler implementation preview. [README](https://github.com/seleniumhq/docker-selenium/tree/trunk/.keda/README.md)
+
+### Changed
+- [`a233e6ef`](http://github.com/seleniumhq/docker-selenium/commit/a233e6efcbcf923f7608352f1a4e89931d3032c1) - [ci] Update tag 4.28.1-20250123 in docs and files :: Selenium CI Bot
+- [`0ffbb8e0`](http://github.com/seleniumhq/docker-selenium/commit/0ffbb8e026e2a46be8a08be912fc04496a78f6a5) - [ci] Update chart 0.39.0 changelog :: Selenium CI Bot
+
+## :heavy_check_mark: selenium-grid-0.39.0
+
+- Chart is using image tag 4.28.0-20250120
+- Chart is tested on Kubernetes versions: v1.26.15,v1.27.16,v1.28.15,v1.29.13,v1.30.9,v1.31.5,v1.32.1
+- Chart is tested on container runtime Docker versions: 26.1.4,27.4.1
+- Chart is tested on Helm versions: v3.11.3,v3.12.3,v3.13.3,v3.14.3,v3.15.4,v3.16.4,v3.17.0
+- Chart is tested autoscaling capabilities with KEDA image tag: 2.16.1-selenium-grid-20250120
+- Selenium Grid Scaler implementation preview. [README](https://github.com/seleniumhq/docker-selenium/tree/trunk/.keda/README.md)
+
+### Changed
+- [`6cf49815`](http://github.com/seleniumhq/docker-selenium/commit/6cf498159d8e30195a2be67faa8f20b16e25a644) - [ci] Update tag 4.28.0-20250120 in docs and files :: Selenium CI Bot
+- [`dd1731da`](http://github.com/seleniumhq/docker-selenium/commit/dd1731dab3f591e69717ecbc9e7b8f3b62740514) - Enable passing securityContext to initContainers in the Helm chart (#2607) :: Oskar Budziosz
+- [`ee5e6581`](http://github.com/seleniumhq/docker-selenium/commit/ee5e6581fd93f4f72dfecb32c0e7c5ffb0c8d351) - Update Helm release kube-prometheus-stack to v68.3.0 (#2604) :: renovate[bot]
+- [`e9c4c3df`](http://github.com/seleniumhq/docker-selenium/commit/e9c4c3df899642fba55bcb5c3c75a0ba20fff078) - Update Helm release kube-prometheus-stack to v68.2.2 (#2601) :: renovate[bot]
+- [`d1ebdcfc`](http://github.com/seleniumhq/docker-selenium/commit/d1ebdcfc973c52b6ec7a0e3b4d570d98466f109c) - Update Helm release kube-prometheus-stack to v68.2.1 (#2597) :: renovate[bot]
+- [`e10551de`](http://github.com/seleniumhq/docker-selenium/commit/e10551dea07751a031aff7c4fb775eca496a901e) - K8s: Allow adjutment of component replica count (#2600) :: joshfng
+- [`2b2c9e02`](http://github.com/seleniumhq/docker-selenium/commit/2b2c9e0221511d8cdb4c937518abdbd78c6688fe) - [ci] Update chart 0.38.5 changelog :: Selenium CI Bot
+
 ## :heavy_check_mark: selenium-grid-0.38.5
 
 - Chart is using image tag 4.27.0-20250101
